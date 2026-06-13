@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>青年壇主班 — 讓他願意留下來</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F0E4; --paper-2:#F1E7D7; --paper-3:#EADDC8; --paper-4:#E2D3BA;
+  --ink:#2C2218; --ink-soft:#6E5F4C; --ink-faint:#9C8C72;
+  --amber:#C08A43; --amber-light:#E0B879; --amber-deep:#946B2E; --amber-line:#CDB07A;
+  --terra:#C06B3C; --terra-soft:#D89A6E;
+  --line:#DBCBAD;
+  --serif:"Noto Serif TC",serif; --sans:"Noto Sans TC",sans-serif; --display:"Cormorant Garamond",serif;
+  --ease:cubic-bezier(0.23,1,0.32,1);
+  --maxw:1240px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:var(--sans); background:var(--paper); color:var(--ink);
+  font-size:21px; line-height:1.8; font-weight:300;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  letter-spacing:.01em; overflow:hidden;
+}
+::selection{background:rgba(192,107,60,.2)}
+:focus-visible{outline:2px dashed var(--amber);outline-offset:3px;border-radius:6px}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+/* ---------- DECK / PAGE 系統 ---------- */
+.deck{position:relative;height:100vh;width:100%}
+.page{
+  position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;
+  display:grid;align-content:safe center;
+  padding:78px 0 98px;
+  opacity:0;visibility:hidden;transform:translateY(22px);
+  transition:opacity .6s var(--ease),transform .7s var(--ease),visibility .6s;
+  scrollbar-width:thin;scrollbar-color:var(--amber-line) transparent;
+}
+.page::-webkit-scrollbar{width:8px}
+.page::-webkit-scrollbar-thumb{background:var(--amber-line);border-radius:8px}
+.page.active{opacity:1;visibility:visible;transform:none;z-index:3}
+.page.bleed{padding:0;display:block}
+.bleed-content{position:relative;z-index:2;min-height:100%;display:grid;align-content:safe center;padding:84px 0 104px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 56px;width:100%}
+
+/* 進場 stagger */
+.rise{opacity:0;transform:translateY(24px)}
+.page.active .rise{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .8s var(--ease)}
+.page.active .d1{transition-delay:.08s}
+.page.active .d2{transition-delay:.16s}
+.page.active .d3{transition-delay:.24s}
+.page.active .d4{transition-delay:.32s}
+@media (prefers-reduced-motion:reduce){.rise,.page{transition:none!important}.rise{opacity:1;transform:none}}
+
+/* ---------- 共用元件 ---------- */
+.kicker{font-family:var(--sans);font-size:17px;font-weight:500;letter-spacing:.38em;text-transform:uppercase;color:var(--terra);display:flex;align-items:center;gap:16px}
+.kicker .num{font-family:var(--display);font-weight:600;font-size:27px;letter-spacing:0;color:var(--amber)}
+.kicker::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--amber-line),transparent);opacity:.6;max-width:130px}
+.kicker.ctr{justify-content:center}
+.kicker.ctr::after{display:none}
+.kicker.ctr::before{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--amber-line));opacity:.6;max-width:110px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.16;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(34px,4vw,54px);font-weight:600;color:var(--ink)}
+p{text-wrap:pretty}
+.lead{font-size:clamp(20px,2vw,25px);line-height:1.74;color:var(--ink-soft);font-weight:300}
+.tag{display:inline-block;font-size:17px;font-weight:500;letter-spacing:.04em;padding:6px 18px 8px;border-radius:50px;background:var(--paper-3);color:var(--terra);border:1px solid var(--line)}
+
+/* ---------- 頂列 / 導航 ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;height:72px;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:linear-gradient(180deg,var(--paper) 30%,rgba(247,240,228,.6) 75%,transparent)}
+.brand{display:flex;align-items:baseline;gap:13px}
+.brand b{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink);letter-spacing:.04em}
+.brand span{font-size:15px;letter-spacing:.26em;text-transform:uppercase;color:var(--terra);font-weight:500}
+.counter{font-family:var(--display);font-size:22px;color:var(--amber-deep);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.counter i{color:var(--ink-faint);font-style:normal;font-size:17px;margin:0 2px}
+
+.nav{position:fixed;bottom:0;left:0;right:0;height:92px;z-index:60;display:flex;align-items:center;justify-content:center;gap:26px;background:linear-gradient(0deg,var(--paper) 35%,rgba(247,240,228,.5) 78%,transparent)}
+.navbtn{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--paper);display:flex;align-items:center;justify-content:center;transition:background .3s var(--ease),transform .3s var(--ease),border-color .3s}
+.navbtn:hover{background:var(--paper-3);border-color:var(--amber-line)}
+.navbtn:active{transform:scale(.94)}
+.navbtn svg{width:18px;height:18px;stroke:var(--ink-soft);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.navbtn[disabled]{opacity:.32;cursor:default}
+.navbtn[disabled]:hover{background:var(--paper);border-color:var(--line)}
+.dots{display:flex;align-items:center;gap:11px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--paper-4);border:1px solid var(--line);transition:all .35s var(--ease);padding:0}
+.dot:hover{background:var(--amber-light)}
+.dot.on{width:30px;border-radius:8px;background:var(--amber);border-color:var(--amber)}
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--terra));width:0;z-index:70;transition:width .5s var(--ease)}
+.hint{position:fixed;bottom:104px;left:50%;transform:translateX(-50%);z-index:55;font-size:15px;letter-spacing:.2em;color:var(--ink-faint);text-transform:uppercase;opacity:.8;pointer-events:none;transition:opacity .6s}
+
+/* ---------- COVER ---------- */
+.cover .bg{position:absolute;inset:0;z-index:0}
+.cover .bg img{width:100%;height:100%;object-fit:cover;object-position:60% center}
+.cover .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--paper) 3%,rgba(247,240,228,.9) 30%,rgba(247,240,228,.25) 58%,transparent 100%)}
+.cover .inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 56px;width:100%}
+.cover .eyebrow{font-size:18px;letter-spacing:.42em;text-transform:uppercase;color:var(--terra);font-weight:500;margin-bottom:28px}
+.cover h1{font-family:var(--serif);font-weight:700;font-size:clamp(60px,10vw,138px);line-height:1.0;letter-spacing:.01em;color:var(--ink)}
+.cover h1 .sub{display:block;font-size:clamp(22px,3vw,40px);font-weight:400;letter-spacing:.26em;color:var(--terra);margin-top:26px}
+.cover .statement{margin-top:40px;max-width:620px;font-size:23px;line-height:1.76;color:var(--ink-soft);font-weight:300;border-left:2px solid var(--terra);padding-left:24px}
+.cover .meta{margin-top:42px;display:flex;gap:12px;flex-wrap:wrap}
+
+/* ---------- 總綱 ---------- */
+.creed{text-align:center}
+.creed .big{font-family:var(--serif);font-size:clamp(28px,3.5vw,46px);font-weight:500;line-height:1.55;letter-spacing:.01em;max-width:1000px;margin:32px auto 0}
+.creed .big b{font-weight:700;color:var(--terra);font-style:normal}
+.keywords{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:50px auto 0}
+.kw{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--amber-deep);padding:11px 28px;border:1px solid var(--amber-line);border-radius:50px;background:var(--paper-2)}
+.kw span{color:var(--ink-faint);font-size:16px;font-weight:300;display:block;letter-spacing:.1em;margin-top:1px;font-family:var(--sans)}
+
+/* ---------- split ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.split .figure{max-height:58vh}
+.figure{border-radius:18px;overflow:hidden;box-shadow:0 24px 56px -28px rgba(90,60,25,.5),0 4px 14px -6px rgba(90,60,25,.25)}
+.figure img{width:100%;height:100%;object-fit:cover;display:block}
+.body-col p+p{margin-top:18px}
+.note{font-size:19px;color:var(--ink-faint);font-weight:300}
+
+/* ---------- §1 轉折 ---------- */
+.pivot-banner{display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,52px);flex-wrap:wrap;margin:22px 0 8px}
+.pv{text-align:center;flex:1;min-width:200px}
+.pv .pvl{font-size:16px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;margin-bottom:12px}
+.pv .pvt{font-family:var(--serif);font-size:clamp(24px,2.8vw,34px);font-weight:600;line-height:1.3}
+.pv.from .pvl,.pv.from .pvt{color:var(--ink-faint)}
+.pv.to .pvl{color:var(--terra)}.pv.to .pvt{color:var(--ink)}
+.pv-arrow{font-family:var(--display);font-size:48px;color:var(--amber);line-height:1;flex:none}
+.quotepair{margin-top:12px;display:flex;flex-direction:column;gap:16px}
+.qz{font-family:var(--serif);font-size:22px;font-weight:500;line-height:1.5;color:var(--ink);padding:20px 24px;background:var(--paper-2);border-left:3px solid var(--amber);border-radius:0 12px 12px 0}
+.qz::before{content:"\201C";font-family:var(--display);color:var(--amber-light);font-size:36px;line-height:0;vertical-align:-10px;margin-right:3px}
+
+/* ---------- §2 三類學員 ---------- */
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:14px}
+.acard{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:32px 28px 34px;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.acard:hover{transform:translateY(-6px);box-shadow:0 26px 52px -32px rgba(90,60,25,.5)}
+.acard .role{font-family:var(--serif);font-size:25px;font-weight:600;color:var(--ink)}
+.acard .st{display:inline-block;margin:12px 0 15px;font-size:16px;font-weight:500;color:var(--terra);background:var(--paper-3);padding:5px 14px;border-radius:40px}
+.acard .ch{font-size:19px;color:var(--ink-soft);line-height:1.62}
+.acard .ch b{color:var(--ink);font-weight:500}
+.subnote{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px}
+.subnote .sn{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 26px}
+.subnote .sn h4{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--amber-deep);margin-bottom:6px}
+.subnote .sn p{font-size:18px;color:var(--ink-soft);line-height:1.58}
+
+/* ---------- §3 現實 ---------- */
+.real-list{list-style:none;margin-top:8px}
+.real-list li{font-size:21px;line-height:1.6;padding:18px 0 18px 38px;position:relative;border-top:1px solid var(--line);color:var(--ink-soft)}
+.real-list li:last-child{border-bottom:1px solid var(--line)}
+.real-list li::before{content:"";position:absolute;left:2px;top:28px;width:11px;height:11px;border-radius:50%;background:var(--terra-soft);box-shadow:0 0 0 5px rgba(192,107,60,.13)}
+.real-list li b{color:var(--ink);font-weight:500}
+.real-key{margin-top:26px;background:var(--paper-2);border:1px solid var(--line);border-left:4px solid var(--terra);border-radius:0 14px 14px 0;padding:26px 30px}
+.real-key .rk{font-size:16px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);font-weight:500;margin-bottom:10px}
+.real-key p{font-size:21px;color:var(--ink-soft);line-height:1.66}
+.real-key b{color:var(--ink);font-weight:500}
+
+/* ---------- §4 七個點子 ---------- */
+.ideawall{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px}
+.idea{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:24px 22px;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.idea:hover{transform:translateY(-5px);box-shadow:0 22px 44px -30px rgba(90,60,25,.5)}
+.idea .in{font-family:var(--display);font-size:40px;font-weight:600;color:var(--amber-light);line-height:.9}
+.idea h4{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--ink);margin:4px 0 10px}
+.idea p{font-size:16.5px;color:var(--ink-soft);line-height:1.55}
+.idea p b{color:var(--ink);font-weight:500}
+.idea.feature{border-color:var(--amber-line);background:linear-gradient(180deg,var(--paper),var(--paper-3))}
+.idea .flag{display:inline-block;margin-top:10px;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);font-weight:500}
+.idea.spirit{background:var(--ink);display:flex;align-items:center}
+.idea.spirit p{font-family:var(--serif);font-size:19px;color:var(--amber-light);font-weight:600;line-height:1.5}
+
+/* ---------- §5 訊息 ---------- */
+.msg-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mcard{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:22px 26px;position:relative;overflow:hidden}
+.mcard::before{content:"";position:absolute;top:0;left:0;width:5px;height:100%;background:linear-gradient(180deg,var(--amber),var(--terra-soft))}
+.mcard .mi{font-family:var(--display);font-size:19px;font-weight:600;color:var(--terra);text-transform:uppercase}
+.mcard h3{font-family:var(--serif);font-size:23px;font-weight:600;margin:4px 0 9px;color:var(--ink)}
+.mcard p{font-size:17.5px;color:var(--ink-soft);line-height:1.58}
+.mcard p b{color:var(--ink);font-weight:500}
+
+/* ---------- §6 世代 ---------- */
+.gen-pull{text-align:center;max-width:980px;margin:0 auto}
+.gen-pull .pq{font-family:var(--serif);font-size:clamp(28px,3.6vw,48px);font-weight:600;line-height:1.4;color:var(--ink);letter-spacing:.01em;margin-top:22px}
+.gen-pull .pq b{color:var(--terra);font-weight:700}
+.contrast{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;margin-top:40px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--paper)}
+.cside{padding:36px 36px}
+.cside.before{background:var(--paper-2)}
+.cside .era{font-size:16px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;margin-bottom:6px}
+.cside.before .era{color:var(--ink-faint)}.cside.after .era{color:var(--terra)}
+.cside h3{font-family:var(--serif);font-size:27px;font-weight:600;margin-bottom:14px;color:var(--ink)}
+.cside p{font-size:18.5px;color:var(--ink-soft);line-height:1.64}
+.cside p+p{margin-top:12px}
+.cmid{width:1px;background:linear-gradient(180deg,transparent,var(--amber-line),transparent);position:relative}
+.cmid::after{content:"vs";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--display);font-style:italic;font-size:26px;color:var(--amber);background:var(--paper);padding:5px 7px}
+.gen-coda{text-align:center;font-family:var(--serif);font-size:21px;color:var(--ink-soft);font-weight:400;max-width:840px;margin:30px auto 0;line-height:1.66}
+.gen-coda b{color:var(--amber-deep);font-weight:600}
+
+/* ---------- §7 充電 ---------- */
+.deflist{list-style:none;margin-top:10px}
+.deflist li{padding:14px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.deflist li:last-child{border-bottom:1px solid var(--line)}
+.deflist .mk{font-family:var(--display);font-size:30px;font-weight:600;color:var(--amber-light);line-height:1}
+.deflist .dt{font-size:22px;font-weight:500;color:var(--ink)}
+.deflist .dd{font-size:18.5px;color:var(--ink-soft);margin-top:4px;line-height:1.6}
+.callout{background:var(--paper-3);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:0 14px 14px 0;padding:20px 26px;margin-top:16px}
+.callout .ct{font-size:16px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);font-weight:500;margin-bottom:8px}
+.callout p{font-size:20px;color:var(--ink-soft);line-height:1.66}
+.callout b{color:var(--ink);font-weight:500}
+
+/* ---------- §8a 張力 ---------- */
+.tension-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:14px}
+.tcard{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:26px 30px}
+.tcard h4{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:11px}
+.tcard h4::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--terra-soft);flex:none;transform:rotate(45deg)}
+.tcard p{font-size:18.5px;color:var(--ink-soft);line-height:1.6}
+
+/* ---------- §8b 擁抱（bleed）---------- */
+.resolve .bg{position:absolute;inset:0;z-index:0}
+.resolve .bg img{width:100%;height:100%;object-fit:cover;object-position:right center}
+.resolve .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--paper) 10%,rgba(247,240,228,.85) 40%,transparent 80%)}
+.resolve .inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 56px;width:100%}
+.resolve .panel{max-width:600px}
+.resolve .rq{font-family:var(--serif);font-size:24px;font-weight:500;line-height:1.58;color:var(--ink);margin-top:22px}
+.resolve .rq b{color:var(--terra);font-weight:600}
+
+/* ---------- §9 結論 ---------- */
+.conclusion{text-align:center}
+.axes{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:880px;margin:40px auto 0;text-align:left}
+.axis{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:32px 34px}
+.axis .ax{font-family:var(--display);font-size:38px;font-weight:600;color:var(--amber-light);line-height:.9}
+.axis h4{font-family:var(--serif);font-size:23px;font-weight:600;margin:8px 0 6px;color:var(--ink)}
+.axis p{font-size:18.5px;color:var(--ink-soft);line-height:1.6}
+.tobe{margin:34px auto 0;max-width:760px;font-family:var(--serif);font-size:21px;font-weight:500;color:var(--ink-soft);line-height:1.66}
+.tobe b{color:var(--terra);font-weight:600}
+.pill-row{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+
+/* ---------- §10 行動 ---------- */
+.actions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+.act{display:grid;grid-template-columns:auto 1fr;gap:18px;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:24px 26px;transition:transform .35s var(--ease),background .35s var(--ease)}
+.act:hover{transform:translateY(-4px);background:var(--paper-3)}
+.act .an{font-family:var(--display);font-size:38px;font-weight:600;color:var(--amber-light);line-height:.9}
+.act .at{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.act .ad{font-size:17px;color:var(--ink-soft);line-height:1.52}
+
+/* ---------- 結尾 ---------- */
+.closing .bg{position:absolute;inset:0;z-index:0}
+.closing .bg img{width:100%;height:100%;object-fit:cover}
+.closing .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 46%,rgba(44,34,24,.34),rgba(44,34,24,.74) 80%)}
+.closing .inner{position:relative;z-index:2;text-align:center;max-width:880px;margin:0 auto;padding:0 56px;color:var(--paper)}
+.closing .ft-title{font-family:var(--serif);font-size:clamp(34px,5vw,60px);font-weight:600;color:var(--amber-light);letter-spacing:.04em}
+.closing .ft-sub{font-family:var(--serif);font-size:24px;color:#F1E3C9;margin-top:20px;font-weight:400;line-height:1.6}
+.closing p.disc{font-size:17px;color:#D6C8B0;font-weight:300;line-height:1.7;margin:34px auto 0;max-width:780px}
+.closing .meta{display:flex;gap:34px;flex-wrap:wrap;justify-content:center;margin-top:24px;font-size:17px;color:#B6A688}
+.closing .meta b{color:var(--paper);font-weight:500}
+
+/* ---------- 溯源：試聽 + 逐字稿 ---------- */
+.srcctl{display:flex;align-items:center;gap:10px;flex:1;justify-content:center;min-width:0;padding:0 16px}
+.play-btn{position:relative;display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-size:16.5px;font-weight:500;color:var(--paper);background:var(--ink);border-radius:50px;padding:9px 18px;overflow:hidden;white-space:nowrap;transition:background .3s var(--ease)}
+.play-btn:hover,.play-btn.playing{background:var(--amber-deep)}
+.play-btn .ic{font-size:12px;line-height:1}
+.play-btn .tm{font-family:var(--display);font-size:16px;font-weight:600;color:var(--amber-light);letter-spacing:.03em}
+.play-btn .fill{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--amber-light);transition:width .2s linear}
+.src-trans{display:inline-flex;align-items:center;gap:8px;font-size:16.5px;font-weight:500;color:var(--terra);background:var(--paper-3);border:1px solid var(--line);border-radius:50px;padding:8px 16px;cursor:help;white-space:nowrap}
+.src-trans .ic{font-size:14px}
+.srcctl.hide{visibility:hidden}
+#tip{position:fixed;z-index:90;max-width:520px;max-height:52vh;overflow-y:auto;background:var(--ink);color:#F2E6CC;border:1px solid var(--amber-deep);border-radius:16px;padding:22px 24px;font-size:18.5px;line-height:1.82;font-weight:300;box-shadow:0 30px 70px -24px rgba(40,28,16,.55);display:none;letter-spacing:.01em}
+#tip.show{display:block;animation:tipfade .26s var(--ease)}
+@keyframes tipfade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+#tip .th{display:block;font-family:var(--sans);font-size:14.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber-light);font-weight:500;margin-bottom:11px}
+#tip .rawline{display:block;margin-top:14px;padding-top:12px;border-top:1px dashed rgba(224,184,121,.35);font-size:15px;color:#B9A988;line-height:1.7}
+#tip::-webkit-scrollbar{width:8px}#tip::-webkit-scrollbar-thumb{background:var(--amber-deep);border-radius:8px}
+
+/* ---------- RWD ---------- */
+@media (max-width:960px){
+  body{font-size:19px}
+  .wrap,.cover .inner,.resolve .inner,.closing .inner{padding:0 26px}
+  .page{padding:78px 0 96px}
+  .split{grid-template-columns:1fr;gap:30px}
+  .cards3,.ideawall,.msg-grid,.tension-grid,.axes,.actions-grid,.subnote{grid-template-columns:1fr;gap:16px}
+  .ideawall{grid-template-columns:1fr 1fr}
+  .contrast{grid-template-columns:1fr}
+  .cmid{width:auto;height:1px;background:linear-gradient(90deg,transparent,var(--amber-line),transparent)}
+  .pivot-banner{flex-direction:column;gap:14px}.pv-arrow{transform:rotate(90deg)}
+  .cover .bg::after{background:linear-gradient(180deg,rgba(247,240,228,.3),var(--paper) 78%)}
+  .resolve .bg::after{background:linear-gradient(180deg,rgba(247,240,228,.5),var(--paper) 78%)}
+  .nav{gap:14px}.dots{gap:8px}
+  .topbar,.nav{padding-left:20px;padding-right:20px}
+  .brand span{display:none}
+  .srcctl{padding:0 6px;gap:7px}
+  .play-btn{padding:8px 13px;font-size:14.5px}.play-btn .tm{font-size:14px}
+  .src-trans{padding:7px 12px;font-size:14.5px}
+}
+@media (max-width:620px){
+  .ideawall{grid-template-columns:1fr}
+  .brand b{font-size:18px}
+  .play-btn .lbl2{display:none}
+  #tip{font-size:16px;padding:18px 18px;max-width:92vw}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<!-- 頂列 -->
+<header class="topbar">
+  <button class="brand" id="brand" aria-label="回首頁">
+    <b>願意留下來</b><span>青年壇主班</span>
+  </button>
+  <div class="srcctl" id="srcctl">
+    <button class="play-btn" id="playBtn" aria-label="試聽此段錄音"><span class="ic">&#9654;</span><span class="lbl2">試聽此段</span><span class="tm" id="ptm"></span><span class="fill" id="pfill"></span></button>
+    <span class="src-trans" id="srcTrans" tabindex="0"><span class="ic">&#9776;</span>逐字稿</span>
+  </div>
+  <div class="counter"><span id="cur">01</span><i>/</i><span id="total">14</span></div>
+</header>
+
+<main class="deck" id="deck">
+
+  <!-- 0 COVER -->
+  <section class="page bleed cover" data-label="封面">
+    <div class="bg"><img src="assets/img/hero.png" alt="暖金窗光下，一群年輕人勾肩搭背相伴而立"></div>
+    <div class="bleed-content">
+      <div class="inner">
+        <div class="eyebrow rise">青年壇主班 · 課程設計討論</div>
+        <h1 class="rise d1">願意留下來<span class="sub">先讓他喜歡來 · 才談得上接班</span></h1>
+        <p class="statement rise d2">不是「要他做什麼」，而是讓他喜歡來、願意留下來——這場討論，從這個轉念開始。</p>
+        <div class="meta rise d3">
+          <span class="tag">2026.06.13</span>
+          <span class="tag">討論時長 102 分鐘</span>
+          <span class="tag">多人即席腦力激盪</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 總綱 -->
+  <section class="page creed" data-label="總綱">
+    <div class="wrap">
+      <div class="kicker ctr rise"><span class="num">00</span> 一句話總綱</div>
+      <p class="big rise d1">這是一場為「青年壇主班」設計課程的腦力激盪——目標不是<b>要求二代去做事</b>，而是先讓他們<b>喜歡來、願意留下來</b>：用體驗、遊戲、分組互動，讓孩子理解父母在忙什麼、感受「家有佛堂」的好處；同時也替已扛起重任的<b>賢德</b>學長姐充電、療癒、補德。</p>
+      <div class="keywords rise d2">
+        <div class="kw">理解<span>UNDERSTAND</span></div>
+        <div class="kw">見證<span>WITNESS</span></div>
+        <div class="kw">留下來<span>STAY</span></div>
+        <div class="kw">充電<span>RECHARGE</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 §1 核心定調 -->
+  <section class="page" data-label="核心定調">
+    <div class="wrap">
+      <div class="rise"><div class="kicker"><span class="num">01</span> 核心定調</div>
+        <h2 style="margin-top:18px">從「要他做」，轉向「讓他願意」</h2></div>
+      <div class="pivot-banner rise d1">
+        <div class="pv from"><div class="pvl">過去的出發點</div><div class="pvt">你得來接班 · 你得做什麼</div></div>
+        <div class="pv-arrow">→</div>
+        <div class="pv to"><div class="pvl">現在的出發點</div><div class="pvt">先讓他喜歡來 · 願意留下來</div></div>
+      </div>
+      <div class="split rise d2" style="margin-top:30px">
+        <div class="figure"><img src="assets/img/pivot.png" alt="敞開的木門透進暖金色光，象徵從要求轉為歡迎"></div>
+        <div class="body-col">
+          <p>「叫他做什麼，他下次就不來了。」對二代而言，把接班、做事當開場是反效果。重點要放回<b style="color:var(--ink);font-weight:500">情感與喜歡</b>——先讓孩子認識我們、喜歡我們、願意留下來。</p>
+          <p class="note" style="margin-top:14px">理解先於行動：以實作／體驗為主、觀念為輔——情感連結往往發生在活動與遊戲裡，而非單向講課。</p>
+          <div class="quotepair">
+            <p class="qz">佛堂不是只有你父母而已，我們都是你的家人。</p>
+            <p class="qz">要讓他喜歡來，他才會想要來。把那個「想來」的衝動培養起來，比較重要。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 §2 對象 -->
+  <section class="page" data-label="對象與定位">
+    <div class="wrap">
+      <div class="rise"><div class="kicker"><span class="num">02</span> 對象與定位</div>
+        <h2 style="margin-top:18px">一個班，三種人</h2>
+        <p class="lead" style="margin-top:14px">同一堂課，要同時打中三群很不一樣的孩子。</p></div>
+      <div class="cards3 rise d1">
+        <div class="acard"><div class="role">純二代</div><div class="st">尚未進賢德 · 國高中</div><p class="ch">被父母半推半就帶來，「非來不可」的理由薄弱。要先給他<b>「家有佛堂的好處」</b>，培養想來的衝動。</p></div>
+        <div class="acard"><div class="role">賢德的孩子</div><div class="st">較有自覺 · 相對懂事</div><p class="ch">已聽過很多觀念，<b>不能再一直「叫他做什麼」</b>。要的是被看見、被滋養，而不是又一輪任務。</p></div>
+        <div class="acard"><div class="role">學長姐 · 老賢德</div><div class="st">成熟度高 · 實際帶人</div><p class="ch">課程要能真正<b>「打中」他們</b>，否則完全沒打在身上。內聖、自我修為，是他們最需要補的一塊。</p></div>
+      </div>
+      <div class="subnote rise d2">
+        <div class="sn"><h4>年齡跨度大</h4><p>從國中、高中到出社會，「range 還是很大」；國高中、男女差異都是挑戰，彼此不見得願意一起玩。</p></div>
+        <div class="sn"><h4>班名為何掛「賢德」</h4><p>賢德班只有兩天，內聖與自我修為放不進去，想藉壇主班補上。此班相對寬鬆，本質是一個「青年壇組班」。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 §3 現實 -->
+  <section class="page" data-label="現實限制">
+    <div class="wrap split" style="gap:54px">
+      <div class="body-col rise">
+        <div class="kicker"><span class="num">03</span> 現實的限制</div>
+        <h2 style="margin-top:18px">怎麼讓他「固定回得來」</h2>
+        <p class="lead" style="margin-top:14px">在談課程之前，先得面對最現實的一關——出席與交通。</p>
+        <div class="real-key"><div class="rk">務實結論</div><p>與其每次另辦活動，不如讓孩子<b>固定能來上進階班</b>——只要常出現在面前，辦活動時就不會忘記把他們「撈上來」。</p></div>
+      </div>
+      <div class="body-col rise d1">
+        <ul class="real-list">
+          <li><b>既有平台</b>：進階班、真美班（？）、心靈班、國高中班，已是現成的接觸點。</li>
+          <li><b>台北相對便利</b>：孩子大一點、家長 OK，自己搭車就能到。</li>
+          <li><b>其他地區較難</b>：幾乎一定要家長接送；晚上的進階班「跟補習一樣」，父母得在外面等。</li>
+          <li><b>補習壓力</b>：孩子要一直補習，補完還要再補，是來上課的一大阻力。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 §4 七個點子 -->
+  <section class="page" data-label="七個點子">
+    <div class="wrap">
+      <div class="rise" style="text-align:center;max-width:840px;margin:0 auto">
+        <div class="kicker ctr"><span class="num">04</span> 課程設計</div>
+        <h2 style="margin-top:16px">會中現場發想的七個點子</h2>
+        <p class="lead" style="margin-top:12px">討論最熱烈、產出最多的部分——一個接一個被「接住」的可行設計。</p>
+      </div>
+      <div class="ideawall rise d1">
+        <div class="idea"><div class="in">1</div><h4>夏令營式混齡分組</h4><p>仿夏令營，每組平均配置不同年齡；有經驗者當小班長「大的代小的」，依地區分組，每組安插一位住公堂的種子。</p></div>
+        <div class="idea"><div class="in">2</div><h4>心智圖認識父母</h4><p>把成員名字往外延伸：父母在佛堂是什麼角色、在做什麼。邏輯：<b>討厭父母 → 理解父母 → 變成父母</b>。</p></div>
+        <div class="idea"><div class="in">3</div><h4>丟筒子 · 說真心話</h4><p>不記名寫「你為什麼來」投入筒子隨機抽出討論。製造「原來這裡可以講真話」的氛圍。</p></div>
+        <div class="idea feature"><div class="in">4</div><h4>見證分享</h4><p>講「家有佛堂的好處」：准考證放佛桌、求道後脾氣變好。效法基督教「逢人就講」。</p><span class="flag">★ 關鍵</span></div>
+        <div class="idea"><div class="in">5</div><h4>親子訪談短片</h4><p>找走過親子糾結的親子做訪談，剪成「搜查線」式短片（可馬賽克）。預先剪輯使其「可控、不會燒起來」。</p></div>
+        <div class="idea"><div class="in">6</div><h4>集氣 · 禱告橋段</h4><p>仿基督教小組替彼此禱告，全組牽手祈福。是信念的傳遞——但「好的很好，不好的超尷尬」，需拿捏。</p></div>
+        <div class="idea"><div class="in">7</div><h4>擁抱 · 寫一句話破冰</h4><p>什麼都不用講，輪流抱一下。化解新舊賢德的疙瘩——「越解釋越慘，不如抱一下」。</p></div>
+        <div class="idea spirit"><p>七個點子的共同精神：讓孩子知道，這裡是「願意聽、可以講真話」的地方。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 §5 訊息 -->
+  <section class="page" data-label="給二代的話">
+    <div class="wrap split" style="gap:54px;align-items:center">
+      <div class="rise">
+        <div class="kicker"><span class="num">05</span> 想對孩子說的話</div>
+        <h2 style="margin-top:18px">給二代的四則訊息</h2>
+        <p class="lead" style="margin-top:14px">針對尚未進賢德的純二代，凝聚出要傳遞的核心觀念。</p>
+        <div class="figure" style="margin-top:26px"><img src="assets/img/messages.png" alt="一位年輕人在暖光窗邊靜坐，沉靜而被充電"></div>
+      </div>
+      <div class="msg-grid rise d1" style="grid-template-columns:1fr">
+        <div class="mcard"><div class="mi">壹</div><h3>留下來，是萬中選一</h3><p>每天篩掉九成的人，能留下來「<b>真的是萬中選一</b>、是有使命的」。但也要把「代價」說清楚。</p></div>
+        <div class="mcard"><div class="mi">貳</div><h3>多了一份「覺察」</h3><p>求道後多了覺察的能力——心裡有個「<b>小天使</b>」，在情緒翻湧時幫你壓住小惡魔。</p></div>
+        <div class="mcard"><div class="mi">參</div><h3>真正的充電與療癒</h3><p>身體很累，但靜下來後「心靈相對平靜」，是真正的充電；回到日常，更有力氣。</p></div>
+        <div class="mcard"><div class="mi">肆</div><h3>口袋裡的一個風景區</h3><p>就算現在無法接受，也可以把佛堂當成「<b>口袋裡的風景區</b>」——某一天真的來時，會得到自己要的東西。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 §6 世代 -->
+  <section class="page" data-label="世代洞察">
+    <div class="wrap">
+      <div class="gen-pull rise">
+        <div class="kicker ctr"><span class="num">06</span> 最有份量的洞察</div>
+        <p class="pq">為什麼以前的二代不怨父母，現在的孩子會？<br><b>因為父母在賺天地，是看不到的。</b></p>
+      </div>
+      <div class="contrast rise d1">
+        <div class="cside before"><div class="era">以前的孩子</div><h3>那關乎「生存」</h3><p>父母打三份工，是為了全家活下去。孩子能感受到那份辛苦，特別懂事體貼。</p><p>那年代拚聯考、沒空來佛堂，沒有「父母應該陪我」的期待；父母回來會帶東西、講出去玩，所以不討厭佛堂。</p></div>
+        <div class="cmid"></div>
+        <div class="cside after"><div class="era">現在的孩子</div><h3>忙的是「修辦、開荒」</h3><p>孩子感受不到它和「生存」一樣重要，於是難以理解、產生情緒。</p><p>現在孩子太自由、想法多，會問「我為什麼要接受你這樣」。受苦多是「心靈上的」——這是打罵教育的最後一代。</p></div>
+      </div>
+      <p class="gen-coda rise d2">見證的力量，在於「<b>多元視角</b>」——孩子看到別人家因父母付出而改變，就不會困在自己家的傷口裡。</p>
+    </div>
+  </section>
+
+  <!-- 8 §7 充電 -->
+  <section class="page" data-label="賢德充電">
+    <div class="wrap split" style="gap:54px">
+      <div class="figure rise"><img src="assets/img/recharge.png" alt="暖光中靜靜休憩、被滋養的身影，旁邊一杯茶"></div>
+      <div class="body-col rise d1">
+        <div class="kicker"><span class="num">07</span> 給賢德 · 學長姐</div>
+        <h2 style="margin-top:16px">不要再叫他做，替他充電補德</h2>
+        <ul class="deflist">
+          <li><span class="mk">·</span><div><div class="dt">不再灌觀念、交代任務</div><div class="dd">「賢德班已經講那麼多『你要怎麼做』，他聽膩了。」</div></div></li>
+          <li><span class="mk">·</span><div><div class="dt">強化德性與內聖</div><div class="dd">著重讓人願意承奉、跟從、仰慕的那種特質——言、行、心。</div></div></li>
+          <li><span class="mk">·</span><div><div class="dt">充電與滋養</div><div class="dd">讓硬扛起來的人回來能鬆一口氣，出班後還有力量再往前。</div></div></li>
+          <li><span class="mk">·</span><div><div class="dt">讓他自己選擇定位</div><div class="dd">用遊戲讓學員自己走到「我是幹部／我還需要學習」的位置。</div></div></li>
+        </ul>
+        <div class="callout"><div class="ct">一個提醒</div><p>打子彈在「老的」身上時，要同時關注「小的」反應——<b>水龍頭切大，小的別被沖走。</b></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 §8a 張力 -->
+  <section class="page" data-label="新舊張力">
+    <div class="wrap">
+      <div class="rise" style="max-width:840px">
+        <div class="kicker"><span class="num">08</span> 會議尾聲的真實議題</div>
+        <h2 style="margin-top:18px">新舊賢德之間的張力</h2>
+        <p class="lead" style="margin-top:14px">這群人之間的疙瘩，往往是內心問題、解釋不清——卻最需要被接住。</p>
+      </div>
+      <div class="tension-grid rise d1">
+        <div class="tcard"><h4>帶不動</h4><p>有些學長帶不動人，轉而用嚴格的講話方式；底下覺得「標準很爛」，開始互相攻擊。</p></div>
+        <div class="tcard"><h4>定位的迷惘</h4><p>年輕賢德學長姐——老師在、又沒人聽我的，「我到底要定位在哪裡」。</p></div>
+        <div class="tcard"><h4>很會帶的都走了</h4><p>很會帶的人都當老師、或有別的出口；留下來的反而卡住。</p></div>
+        <div class="tcard"><h4>回不去的疏離</h4><p>很久沒回去的人找不到同溫層、跟核心差二十歲，反而「覺得回去很可怕」。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 §8b 擁抱 bleed -->
+  <section class="page bleed resolve" data-label="擁抱破冰">
+    <div class="bg"><img src="assets/img/embrace.png" alt="兩人在暖金色光中相擁，象徵釋懷與破冰"></div>
+    <div class="bleed-content">
+      <div class="inner">
+        <div class="panel rise">
+          <div class="kicker">解法傾向</div>
+          <h2 style="margin-top:14px">不用解釋，用體驗破冰</h2>
+          <p class="rq">很多疙瘩解釋不清也破不了。唯一能做的，是效仿先佛的方式——用<b>擁抱、寫一句話</b>等遊戲，強迫見面、釋懷、破冰、強迫熟悉。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 §9 結論 -->
+  <section class="page conclusion" data-label="結論待續">
+    <div class="wrap">
+      <div class="rise" style="max-width:820px;margin:0 auto">
+        <div class="kicker ctr"><span class="num">09</span> 會議的收斂</div>
+        <h2 style="margin-top:18px">一場未完成、待續的籌備會</h2>
+        <p class="lead" style="margin-top:14px">這次的班，「頂多做到讓孩子先理解父母」就很好——情緒處理，交給各系列班長期進行。</p>
+      </div>
+      <div class="axes rise d1">
+        <div class="axis"><div class="ax">壹</div><h4>家有佛堂的好處</h4><p>讓孩子感受到「住公堂、家有佛堂」實際帶來的改變與好處。</p></div>
+        <div class="axis"><div class="ax">貳</div><h4>父母在做什麼</h4><p>讓孩子看懂父母在忙什麼、為什麼要做——這次只求「先理解」。</p></div>
+      </div>
+      <p class="tobe rise d2">方法論共識：以<b>體驗、遊戲、分組互動、見證分享</b>為主；賢德區塊則強化內聖德性、提供充電療癒與破冰橋段。會中已有人把紀錄 PO 上群組，提議「收整一下、再約下一次」繼續深化。</p>
+      <div class="pill-row rise d3">
+        <span class="tag">先理解，不強求</span><span class="tag">體驗為主</span><span class="tag">見證為鑰</span><span class="tag">待續 · 再約下一次</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 §10 行動 -->
+  <section class="page" data-label="行動要點">
+    <div class="wrap">
+      <div class="rise" style="max-width:820px"><div class="kicker"><span class="num">10</span> Take-aways</div>
+        <h2 style="margin-top:16px">行動要點</h2></div>
+      <div class="actions-grid rise d1">
+        <div class="act"><div class="an">1</div><div><div class="at">改變出發點</div><div class="ad">從「要二代做事」轉為「讓他喜歡來、願意留下來」，情感先於任務。</div></div></div>
+        <div class="act"><div class="an">2</div><div><div class="at">以體驗為主</div><div class="ad">實作、遊戲、分組互動承載情感連結，觀念課點到為止。</div></div></div>
+        <div class="act"><div class="an">3</div><div><div class="at">混齡分組</div><div class="ad">仿夏令營、依地區分組，種子帶新人，組長沿用不重選。</div></div></div>
+        <div class="act"><div class="an">4</div><div><div class="at">強化見證</div><div class="ad">練習把「家有佛堂的好處」「為什麼留下來」具體說出來，逢人就講。</div></div></div>
+        <div class="act"><div class="an">5</div><div><div class="at">幫孩子理解父母</div><div class="ad">用心智圖、訪談短片，讓孩子看懂父母在忙什麼——這次只求先理解。</div></div></div>
+        <div class="act"><div class="an">6</div><div><div class="at">替賢德充電補德</div><div class="ad">不再叫他做事，著重德性、療癒、充電與破冰，讓他出班有力氣再往前。</div></div></div>
+        <div class="act"><div class="an">7</div><div><div class="at">正視新舊張力</div><div class="ad">用擁抱、寫一句話等「不用解釋」的體驗破冰，化解疙瘩、強迫熟悉。</div></div></div>
+        <div class="act"><div class="an">8</div><div><div class="at">面對交通課業</div><div class="ad">盡量讓孩子固定回既有進階班，常出現才好照顧、好邀約。</div></div></div>
+        <div class="act"><div class="an">9</div><div><div class="at">再約下一次</div><div class="ad">本次未定案，需收整紀錄、續開會議，深化課程設計。</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 結尾 -->
+  <section class="page bleed closing" data-label="結尾">
+    <div class="bg"><img src="assets/img/dawn.png" alt="窗邊曙光灑進安靜的房間"></div>
+    <div class="bleed-content">
+      <div class="inner">
+        <div class="ft-title rise">願意留下來</div>
+        <p class="ft-sub rise d1">先讓他喜歡來，再陪他慢慢長大。<br>這一次，只求先彼此理解。</p>
+        <p class="disc rise d2">本報告為錄音討論之重點判讀整理。原音為臺語／國語夾雜的多人即席對話，逐字稿經 AI 語音辨識（whisper）產生後人工整理；部分人名、稱謂、班別名稱辨識不確定，已只保留確定的語意骨架，未臆造未出現的具體數字與人名。視覺插圖由 AI 影像生成（Gemini），主題為溫暖人文的暖光意象。</p>
+        <div class="meta rise d3">
+          <span>來源 · <b>壇主班的討論.m4a</b></span>
+          <span>時長 · <b>102 分鐘</b></span>
+          <span>整理 · <b>2026.06.13</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 底部導航 -->
+<nav class="nav">
+  <button class="navbtn" id="prev" aria-label="上一頁"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+  <div class="dots" id="dots"></div>
+  <button class="navbtn" id="next" aria-label="下一頁"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+</nav>
+<div class="hint" id="hint">← → 鍵切換頁面</div>
+
+<audio id="player" preload="none" src="audio.m4a"></audio>
+<div id="tip"></div>
+
+<script src="srcmap.js"></script>
+<script>
+(function(){
+  const pages=[...document.querySelectorAll('.deck > .page')];
+  const N=pages.length;
+  const dotsBox=document.getElementById('dots');
+  const curEl=document.getElementById('cur'), totalEl=document.getElementById('total');
+  const prevB=document.getElementById('prev'), nextB=document.getElementById('next');
+  const prog=document.getElementById('progress'), hint=document.getElementById('hint');
+  let cur=0;
+  totalEl.textContent=String(N).padStart(2,'0');
+
+  pages.forEach((p,i)=>{
+    const d=document.createElement('button');
+    d.className='dot'; d.setAttribute('aria-label',(p.dataset.label||('第'+(i+1)+'頁')));
+    d.addEventListener('click',()=>go(i));
+    dotsBox.appendChild(d);
+  });
+  const dots=[...dotsBox.children];
+
+  function go(i,fromHash){
+    i=Math.max(0,Math.min(N-1,i));
+    if(i===cur && pages[cur].classList.contains('active')) {return;}
+    pages[cur].classList.remove('active');
+    cur=i;
+    const pg=pages[cur];
+    pg.classList.add('active');
+    pg.scrollTop=0;
+    stopPlay(); updateSrc();
+    dots.forEach((d,k)=>d.classList.toggle('on',k===cur));
+    curEl.textContent=String(cur+1).padStart(2,'0');
+    prog.style.width=((cur)/(N-1)*100)+'%';
+    prevB.disabled=cur===0; nextB.disabled=cur===N-1;
+    if(!fromHash){history.replaceState(null,'','#'+String(cur+1).padStart(2,'0'));}
+  }
+  function nudge(){if(hint){hint.style.opacity='0';}}
+
+  prevB.addEventListener('click',()=>{go(cur-1);nudge();});
+  nextB.addEventListener('click',()=>{go(cur+1);nudge();});
+  document.getElementById('brand').addEventListener('click',()=>{go(0);nudge();});
+
+  addEventListener('keydown',e=>{
+    if(e.target.closest('.srcctl')&&(e.key===' '||e.key==='Enter'))return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){go(cur+1);nudge();e.preventDefault();}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){go(cur-1);nudge();e.preventDefault();}
+    else if(e.key==='Home'){go(0);nudge();}
+    else if(e.key==='End'){go(N-1);nudge();}
+    else if(e.key===' '&&!e.shiftKey){const p=pages[cur];if(p.scrollHeight-p.clientHeight-p.scrollTop<8){go(cur+1);nudge();e.preventDefault();}}
+  });
+
+  // 觸控滑動換頁（僅在該頁無可捲動時）
+  let tx=0,ty=0;
+  addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+  addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.4){go(cur+(dx<0?1:-1));nudge();}
+  },{passive:true});
+
+  addEventListener('hashchange',()=>{const n=parseInt(location.hash.replace('#',''),10);if(n>=1&&n<=N){go(n-1,true);}});
+
+  // ===== 溯源：試聽錄音 + 逐字稿（潤飾版）=====
+  const player=document.getElementById('player');
+  const tip=document.getElementById('tip');
+  const playBtn=document.getElementById('playBtn');
+  const srcTrans=document.getElementById('srcTrans');
+  const srcctl=document.getElementById('srcctl');
+  const ptm=document.getElementById('ptm'), pfill=document.getElementById('pfill');
+  const lbl2=playBtn.querySelector('.lbl2'), pic=playBtn.querySelector('.ic');
+  const SR=(typeof SRC!=='undefined')?SRC:{};
+  const fmt=s=>{s=Math.max(0,s|0);return String(s/60|0).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+  let playing=false, stopAt=0, _actx, _gain;
+  function curKey(){return 's'+(cur+1);}
+  function boostAudio(){
+    if(_actx){if(_actx.state==='suspended')_actx.resume();return;}
+    try{_actx=new (window.AudioContext||window.webkitAudioContext)();
+      const s=_actx.createMediaElementSource(player);
+      _gain=_actx.createGain();_gain.gain.value=2.2;
+      const comp=_actx.createDynamicsCompressor();
+      s.connect(_gain);_gain.connect(comp);comp.connect(_actx.destination);
+      if(_actx.state==='suspended')_actx.resume();
+    }catch(e){_actx=null;}
+  }
+  function updateSrc(){
+    const d=SR[curKey()];
+    if(!d){srcctl.classList.add('hide');return;}
+    srcctl.classList.remove('hide');
+    lbl2.textContent='試聽此段'; ptm.textContent=d.label;
+    pic.innerHTML='&#9654;'; pfill.style.width='0';
+  }
+  function stopPlay(){
+    playing=false; player.pause();
+    pic.innerHTML='&#9654;'; playBtn.classList.remove('playing');
+    const d=SR[curKey()]; if(d){ptm.textContent=d.label; lbl2.textContent='試聽此段';}
+    pfill.style.width='0';
+  }
+  function playSeg(){
+    const d=SR[curKey()]; if(!d)return;
+    if(playing){stopPlay();return;}
+    playing=true; stopAt=d.end;
+    playBtn.classList.add('playing'); pic.innerHTML='&#10073;&#10073;'; lbl2.textContent='';
+    boostAudio();
+    try{player.currentTime=d.start;}catch(e){}
+    player.play().catch(()=>{playing=false;pic.innerHTML='&#9654;';lbl2.textContent='試聽此段';ptm.textContent='需點擊允許';});
+  }
+  player.addEventListener('timeupdate',()=>{
+    if(!playing)return;
+    const d=SR[curKey()]; if(!d)return;
+    ptm.textContent=fmt(player.currentTime-d.start)+' / '+fmt(d.end-d.start);
+    pfill.style.width=Math.max(0,Math.min(100,(player.currentTime-d.start)/(d.end-d.start)*100))+'%';
+    if(player.currentTime>=stopAt)stopPlay();
+  });
+  player.addEventListener('ended',stopPlay);
+  playBtn.addEventListener('click',playSeg);
+
+  // 逐字稿 tooltip
+  let hideT=null;
+  function showTip(){
+    const d=SR[curKey()]; if(!d)return;
+    clearTimeout(hideT);
+    tip.innerHTML='<span class="th">逐字稿 · 潤飾版 · '+d.label+'　（推定改寫，非原話）</span>'+(d.refined||'')+(d.raw?'<span class="rawline">原始辨識：'+d.raw+'</span>':'');
+    tip.classList.add('show');
+    const r=srcTrans.getBoundingClientRect();
+    const tw=Math.min(520,innerWidth-32);
+    let left=r.right-tw; if(left+tw>innerWidth-16)left=innerWidth-16-tw; if(left<16)left=16;
+    tip.style.left=left+'px'; tip.style.top=(r.bottom+12)+'px';
+    const th=tip.offsetHeight;
+    if(r.bottom+12+th>innerHeight-16){const up=r.top-12-th; tip.style.top=(up>16?up:16)+'px';}
+  }
+  function hideTip(){hideT=setTimeout(()=>tip.classList.remove('show'),180);}
+  srcTrans.addEventListener('mouseenter',showTip);
+  srcTrans.addEventListener('mouseleave',hideTip);
+  srcTrans.addEventListener('focus',showTip);
+  srcTrans.addEventListener('blur',()=>tip.classList.remove('show'));
+  tip.addEventListener('mouseenter',()=>clearTimeout(hideT));
+  tip.addEventListener('mouseleave',hideTip);
+
+  const start=parseInt((location.hash||'').replace('#',''),10);
+  go(start>=1&&start<=N?start-1:0,true);
+  setTimeout(nudge,5000);
+})();
+</script>
+</body>
+</html>

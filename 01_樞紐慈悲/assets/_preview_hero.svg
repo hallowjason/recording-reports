@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"><rect width="1600" height="900" fill="#F5EEE0"/>
+  <defs>
+    <radialGradient id="haloWide" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(990 430) rotate(90) scale(150)">
+      <stop offset="0" stop-color="#D9B978" stop-opacity="0.12"/>
+      <stop offset="0.42" stop-color="#C9A85F" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#B8893B" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="haloInner" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(990 430) rotate(90) scale(62)">
+      <stop offset="0" stop-color="#D9B978" stop-opacity="0.18"/>
+      <stop offset="0.55" stop-color="#C9A85F" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#B8893B" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+  </defs>
+
+  <circle cx="990" cy="430" r="150" fill="url(#haloWide)"/>
+  <circle cx="990" cy="430" r="62" fill="url(#haloInner)"/>
+  <circle cx="990" cy="430" r="25" fill="#D9B978" opacity="0.10" filter="url(#softGlow)"/>
+
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <!-- Quiet, widely spaced arrivals from the left and upper-left. -->
+    <g opacity="0.78">
+      <path fill="none" d="M-35 206 C180 198 350 242 510 306 C690 378 809 412 990 430" stroke="#C9A85F" stroke-width="0.8"/>
+      <path fill="none" d="M-25 273 C197 254 341 278 528 337 C702 392 831 420 990 430" stroke="#D9B978" stroke-width="1"/>
+      <path fill="none" d="M-40 351 C170 331 361 339 548 373 C718 404 857 426 990 430" stroke="#B8893B" stroke-width="0.85"/>
+      <path fill="none" d="M-20 438 C188 419 355 407 561 407 C737 407 846 431 990 430" stroke="#C9A85F" stroke-width="1.15"/>
+      <path fill="none" d="M-30 512 C190 510 374 486 554 456 C724 428 851 421 990 430" stroke="#D9B978" stroke-width="0.75"/>
+      <path fill="none" d="M-25 585 C188 583 387 541 572 487 C741 438 864 420 990 430" stroke="#B8893B" stroke-width="1"/>
+      <path fill="none" d="M76 680 C266 637 414 570 590 503 C756 440 868 424 990 430" stroke="#C9A85F" stroke-width="0.9"/>
+      <path fill="none" d="M166 95 C318 148 425 222 569 301 C731 390 852 413 990 430" stroke="#D9B978" stroke-width="0.8"/>
+      <path fill="none" d="M310 -28 C394 111 504 214 624 307 C754 408 875 417 990 430" stroke="#B8893B" stroke-width="0.9"/>
+      <path fill="none" d="M476 -22 C522 108 604 221 697 310 C800 409 890 420 990 430" stroke="#C9A85F" stroke-width="1.1"/>
+      <path fill="none" d="M650 -30 C668 109 725 245 785 325 C858 422 919 419 990 430" stroke="#D9B978" stroke-width="0.75"/>
+      <path fill="none" d="M810 -24 C813 126 836 254 871 337 C906 419 950 418 990 430" stroke="#B8893B" stroke-width="0.9"/>
+    </g>
+
+    <!-- Lower arrivals tighten gradually toward the hub. -->
+    <g opacity="0.84">
+      <path fill="none" d="M332 930 C457 765 622 653 769 551 C868 482 924 452 990 430" stroke="#D9B978" stroke-width="0.85"/>
+      <path fill="none" d="M492 928 C574 766 701 649 808 548 C891 470 940 446 990 430" stroke="#C9A85F" stroke-width="1.2"/>
+      <path fill="none" d="M632 925 C677 755 752 637 844 535 C913 458 951 442 990 430" stroke="#B8893B" stroke-width="0.8"/>
+      <path fill="none" d="M752 930 C770 772 816 632 878 527 C928 443 963 439 990 430" stroke="#D9B978" stroke-width="1"/>
+      <path fill="none" d="M855 925 C852 762 876 631 912 516 C940 426 972 438 990 430" stroke="#C9A85F" stroke-width="0.75"/>
+      <path fill="none" d="M925 925 C908 766 916 624 942 510 C962 422 981 437 990 430" stroke="#B8893B" stroke-width="1.05"/>
+    </g>
+
+    <!-- Interlaced knot: restrained loops crossing immediately around the node. -->
+    <g opacity="0.92">
+      <path fill="none" d="M804 391 C874 391 905 467 967 458 C1028 449 1015 391 1068 397 C1122 404 1114 476 1175 472" stroke="#C9A85F" stroke-width="1.05"/>
+      <path fill="none" d="M827 474 C882 477 903 391 965 399 C1025 407 1020 468 1076 465 C1129 463 1137 410 1193 417" stroke="#D9B978" stroke-width="0.85"/>
+      <path fill="none" d="M852 365 C896 375 915 451 971 451 C1024 451 1030 377 1084 376 C1127 376 1153 429 1211 438" stroke="#B8893B" stroke-width="1.2"/>
+      <path fill="none" d="M846 505 C896 487 916 413 970 410 C1024 407 1032 488 1091 486 C1140 484 1167 442 1228 451" stroke="#C9A85F" stroke-width="0.8"/>
+      <path fill="none" d="M887 340 C919 374 927 474 984 479 C1036 484 1052 402 1102 414 C1144 424 1163 478 1234 487" stroke="#D9B978" stroke-width="0.9"/>
+      <path fill="none" d="M892 529 C925 492 925 386 982 383 C1035 380 1050 458 1104 450 C1155 443 1182 397 1242 409" stroke="#B8893B" stroke-width="1.05"/>
+      <path fill="none" d="M931 358 C950 388 945 465 990 468 C1035 471 1040 393 1082 394" stroke="#C9A85F" stroke-width="0.75"/>
+      <path fill="none" d="M925 498 C951 474 950 396 991 397 C1035 398 1035 469 1085 470" stroke="#D9B978" stroke-width="1.15"/>
+    </g>
+
+    <!-- Re-emergent currents, fanning outward with a denser lower-right field. -->
+    <g opacity="0.82">
+      <path fill="none" d="M990 430 C1085 420 1170 350 1276 279 C1380 209 1478 181 1635 168" stroke="#D9B978" stroke-width="0.8"/>
+      <path fill="none" d="M990 430 C1094 423 1188 373 1297 322 C1410 269 1504 246 1630 248" stroke="#C9A85F" stroke-width="1.1"/>
+      <path fill="none" d="M990 430 C1102 426 1199 402 1317 374 C1436 346 1522 338 1630 352" stroke="#B8893B" stroke-width="0.85"/>
+      <path fill="none" d="M990 430 C1106 431 1214 428 1329 432 C1447 436 1533 451 1632 480" stroke="#D9B978" stroke-width="1"/>
+      <path fill="none" d="M990 430 C1101 438 1215 465 1331 506 C1442 546 1527 581 1632 638" stroke="#C9A85F" stroke-width="0.75"/>
+      <path fill="none" d="M990 430 C1087 447 1199 496 1318 557 C1433 616 1521 677 1630 762" stroke="#B8893B" stroke-width="1.15"/>
+      <path fill="none" d="M990 430 C1079 456 1189 530 1298 610 C1408 691 1499 778 1593 918" stroke="#D9B978" stroke-width="0.9"/>
+      <path fill="none" d="M990 430 C1055 470 1148 565 1244 664 C1329 751 1384 830 1431 928" stroke="#C9A85F" stroke-width="1"/>
+      <path fill="none" d="M990 430 C1046 483 1111 596 1182 710 C1238 801 1274 861 1291 929" stroke="#B8893B" stroke-width="0.8"/>
+      <path fill="none" d="M990 430 C1029 492 1067 615 1110 741 C1135 816 1150 872 1152 930" stroke="#D9B978" stroke-width="1.2"/>
+      <path fill="none" d="M990 430 C1014 500 1027 625 1048 752 C1060 827 1065 877 1061 928" stroke="#C9A85F" stroke-width="0.75"/>
+      <path fill="none" d="M990 430 C1083 437 1192 455 1321 483 C1447 510 1531 539 1634 584" stroke="#B8893B" stroke-width="0.85"/>
+      <path fill="none" d="M990 430 C1082 446 1181 485 1304 535 C1428 586 1525 633 1635 706" stroke="#D9B978" stroke-width="1.05"/>
+      <path fill="none" d="M990 430 C1075 456 1167 515 1277 583 C1392 654 1492 729 1607 844" stroke="#C9A85F" stroke-width="0.9"/>
+      <path fill="none" d="M990 430 C1064 469 1141 549 1236 639 C1332 730 1416 818 1477 925" stroke="#B8893B" stroke-width="1"/>
+      <path fill="none" d="M990 430 C1048 482 1115 581 1193 687 C1260 778 1310 858 1338 928" stroke="#D9B978" stroke-width="0.8"/>
+      <path fill="none" d="M990 430 C1039 490 1085 603 1144 721 C1194 822 1218 874 1227 930" stroke="#C9A85F" stroke-width="1.1"/>
+    </g>
+
+    <!-- Fine secondary strands create depth without filling the field. -->
+    <g opacity="0.48">
+      <path fill="none" d="M-15 156 C249 155 457 260 655 352 C793 416 900 421 990 430" stroke="#D9B978" stroke-width="0.75"/>
+      <path fill="none" d="M98 755 C317 663 493 576 674 504 C810 450 902 434 990 430" stroke="#C9A85F" stroke-width="0.8"/>
+      <path fill="none" d="M575 -18 C612 137 687 275 781 359 C856 426 930 419 990 430" stroke="#B8893B" stroke-width="0.75"/>
+      <path fill="none" d="M738 -15 C742 139 781 287 851 366 C907 429 950 421 990 430" stroke="#D9B978" stroke-width="0.8"/>
+      <path fill="none" d="M990 430 C1109 416 1219 384 1342 345 C1456 309 1539 301 1620 309" stroke="#C9A85F" stroke-width="0.75"/>
+      <path fill="none" d="M990 430 C1097 451 1217 499 1344 562 C1460 620 1545 680 1624 749" stroke="#D9B978" stroke-width="0.8"/>
+      <path fill="none" d="M990 430 C1070 481 1162 588 1253 704 C1327 798 1364 859 1385 925" stroke="#B8893B" stroke-width="0.75"/>
+      <path fill="none" d="M990 430 C1023 509 1053 645 1081 776 C1097 849 1102 891 1098 928" stroke="#C9A85F" stroke-width="0.8"/>
+    </g>
+  </g>
+
+  <!-- Constellation-like waypoints. -->
+  <g>
+    <circle cx="216" cy="260" r="2.4" fill="#C9A85F" opacity="0.74"/>
+    <circle cx="395" cy="337" r="3" fill="#D9B978" opacity="0.82"/>
+    <circle cx="527" cy="231" r="2.2" fill="#B8893B" opacity="0.78"/>
+    <circle cx="584" cy="487" r="2.8" fill="#C9A85F" opacity="0.88"/>
+    <circle cx="686" cy="327" r="2.1" fill="#D9B978" opacity="0.74"/>
+    <circle cx="752" cy="637" r="2.7" fill="#B8893B" opacity="0.82"/>
+    <circle cx="812" cy="406" r="2.3" fill="#C9A85F" opacity="0.86"/>
+    <circle cx="862" cy="526" r="3.1" fill="#D9B978" opacity="0.88"/>
+    <circle cx="908" cy="296" r="2.2" fill="#B8893B" opacity="0.72"/>
+    <circle cx="1087" cy="465" r="2.6" fill="#D9B978" opacity="0.92"/>
+    <circle cx="1168" cy="489" r="2.2" fill="#C9A85F" opacity="0.82"/>
+    <circle cx="1214" cy="429" r="3" fill="#B8893B" opacity="0.78"/>
+    <circle cx="1282" cy="600" r="2.5" fill="#D9B978" opacity="0.84"/>
+    <circle cx="1332" cy="507" r="2.2" fill="#C9A85F" opacity="0.76"/>
+    <circle cx="1387" cy="684" r="3.2" fill="#B8893B" opacity="0.86"/>
+    <circle cx="1451" cy="550" r="2.3" fill="#D9B978" opacity="0.82"/>
+    <circle cx="1508" cy="733" r="2.8" fill="#C9A85F" opacity="0.78"/>
+  </g>
+
+  <circle cx="990" cy="430" r="9" fill="#B8893B"/>
+  <circle cx="987" cy="427" r="2.6" fill="#D9B978" opacity="0.92"/>
+</svg>

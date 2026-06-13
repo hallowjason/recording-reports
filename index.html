@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>錄音開示・重點報告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F0E4;--paper-2:#F1E7D7;--ink:#2C2218;--ink-soft:#6E5F4C;--ink-faint:#9C8C72;
+  --amber:#C08A43;--amber-light:#E0B879;--amber-deep:#946B2E;--terra:#C06B3C;--line:#DBCBAD;
+  --serif:"Noto Serif TC",serif;--sans:"Noto Sans TC",sans-serif;--display:"Cormorant Garamond",serif;
+  --ease:cubic-bezier(0.23,1,0.32,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-weight:300;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;text-wrap:pretty}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.hero{text-align:center;padding:clamp(64px,11vh,120px) 28px clamp(40px,6vh,64px)}
+.eyebrow{font-size:16px;letter-spacing:.42em;text-transform:uppercase;color:var(--terra);font-weight:500;margin-bottom:22px}
+.hero h1{font-family:var(--serif);font-size:clamp(40px,6.5vw,76px);font-weight:700;letter-spacing:.02em;line-height:1.1;color:var(--ink)}
+.hero p{margin:24px auto 0;max-width:580px;font-size:clamp(17px,2vw,21px);line-height:1.8;color:var(--ink-soft)}
+.grid{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:30px;max-width:1100px;margin:0 auto clamp(56px,9vh,96px);padding:0 28px;width:100%;align-items:stretch}
+.card{position:relative;border-radius:22px;overflow:hidden;min-height:clamp(340px,52vh,460px);display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--line);box-shadow:0 30px 70px -36px rgba(90,60,25,.55);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.card:hover{transform:translateY(-8px);box-shadow:0 44px 88px -34px rgba(90,60,25,.6)}
+.card .bg{position:absolute;inset:0;z-index:0}
+.card .bg img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.card:hover .bg img{transform:scale(1.05)}
+.card .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(44,34,24,.05) 30%,rgba(44,34,24,.5) 64%,rgba(44,34,24,.86) 100%)}
+.card .inner{position:relative;z-index:2;padding:40px 38px 38px;color:#F7EFDF}
+.card .no{font-family:var(--display);font-size:20px;font-weight:600;letter-spacing:.1em;color:var(--amber-light)}
+.card h2{font-family:var(--serif);font-size:clamp(28px,3.4vw,40px);font-weight:600;margin:8px 0 12px;line-height:1.18;letter-spacing:.01em}
+.card .desc{font-size:clamp(15px,1.6vw,18px);line-height:1.65;color:#E7D8BF;max-width:92%}
+.card .meta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.card .tag{font-size:14px;font-weight:500;letter-spacing:.03em;padding:5px 14px;border-radius:40px;background:rgba(247,240,228,.16);color:#F4E8CF;backdrop-filter:blur(3px)}
+.card .go{margin-top:22px;display:inline-flex;align-items:center;gap:9px;font-size:16px;font-weight:500;color:#fff}
+.card .go .arr{font-family:var(--display);font-size:22px;color:var(--amber-light);transition:transform .4s var(--ease)}
+.card:hover .go .arr{transform:translateX(6px)}
+footer{text-align:center;padding:0 28px clamp(36px,6vh,56px);font-size:14.5px;color:var(--ink-faint);line-height:1.7}
+@media (max-width:760px){.grid{grid-template-columns:1fr;gap:22px}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="eyebrow">錄音開示 · 重點報告</div>
+  <h1>兩場談話，兩份報告</h1>
+  <p>道場內部談話的逐字稿整理與視覺化報告。每一段重點都可回溯原始錄音、對照潤飾後的逐字稿。</p>
+</div>
+
+<div class="grid">
+  <a class="card" href="02_壇主班討論/index.html">
+    <div class="bg"><img src="02_壇主班討論/assets/img/hero.png" alt="壇主班討論"></div>
+    <div class="inner">
+      <div class="no">02 · 課程設計討論</div>
+      <h2>願意留下來</h2>
+      <p class="desc">青年壇主班的腦力激盪——如何讓二代喜歡來、願意留下，並替賢德學長姐充電補德。</p>
+      <div class="meta"><span class="tag">102 分鐘</span><span class="tag">14 屏分頁</span><span class="tag">可試聽溯源</span></div>
+      <span class="go">閱讀報告 <span class="arr">→</span></span>
+    </div>
+  </a>
+  <a class="card" href="01_樞紐慈悲/index.html">
+    <div class="bg"><img src="01_樞紐慈悲/assets/img/hero.png" alt="樞紐慈悲"></div>
+    <div class="inner">
+      <div class="no">01 · 全球開荒戰略</div>
+      <h2>樞紐慈悲</h2>
+      <p class="desc">以樞紐承載慈悲——把握臺灣國際能見度，在全球關鍵節點設立道場載體，讓道在各國重生。</p>
+      <div class="meta"><span class="tag">58 分鐘</span><span class="tag">分頁 Web App</span><span class="tag">可試聽溯源</span></div>
+      <span class="go">閱讀報告 <span class="arr">→</span></span>
+    </div>
+  </a>
+</div>
+
+<footer>逐字稿經 AI 語音辨識整理、人工潤飾，不確定處已標註，未臆造未出現的內容。視覺插圖由 AI 影像生成。</footer>
+</body>
+</html>

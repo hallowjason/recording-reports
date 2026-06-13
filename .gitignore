@@ -1,0 +1,24 @@
+# 大型原始 / 衍生媒體（線上用壓縮版 audio.m4a）
+*.wav
+01_樞紐慈悲/20260613樞紐慈悲.m4a
+02_壇主班討論/壇主班的討論.m4a
+
+# Python / 模型 / 套件
+.venv/
+model_q4/
+node_modules/
+__pycache__/
+*.pyc
+
+# 暫存截圖與腳本
+_*.png
+_*.mjs
+_*.html
+*.log
+
+# 系統
+.DS_Store
+.env
+
+# harness 內部狀態
+.claude/

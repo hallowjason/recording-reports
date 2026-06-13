@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>青年壇主班 — 讓他願意留下來</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F0E4; --paper-2:#F1E7D7; --paper-3:#EADDC8; --paper-4:#E2D3BA;
+  --ink:#2C2218; --ink-soft:#6E5F4C; --ink-faint:#9C8C72;
+  --amber:#C08A43; --amber-light:#E0B879; --amber-deep:#946B2E; --amber-line:#CDB07A;
+  --terra:#C06B3C; --terra-soft:#D89A6E;
+  --line:#DBCBAD;
+  --serif:"Noto Serif TC",serif; --sans:"Noto Sans TC",sans-serif; --display:"Cormorant Garamond",serif;
+  --ease:cubic-bezier(0.23,1,0.32,1);
+  --maxw:1280px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); background:var(--paper); color:var(--ink);
+  font-size:23px; line-height:1.85; font-weight:300;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  letter-spacing:.01em; overflow-x:hidden;
+}
+::selection{background:rgba(192,107,60,.2)}
+a{color:inherit}
+:focus-visible{outline:2px dashed var(--amber);outline-offset:4px;border-radius:6px}
+img{display:block;max-width:100%}
+
+/* ---------- 共用 ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+.kicker{
+  font-family:var(--sans); font-size:19px; font-weight:500; letter-spacing:.4em;
+  text-transform:uppercase; color:var(--terra); display:flex; align-items:center; gap:18px;
+}
+.kicker .num{font-family:var(--display);font-weight:600;font-size:30px;letter-spacing:0;color:var(--amber)}
+.kicker::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--amber-line),transparent);opacity:.6;max-width:140px}
+.kicker.ctr{justify-content:center}
+.kicker.ctr::after{display:none}
+.kicker.ctr::before{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--amber-line));opacity:.6;max-width:120px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.18;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(38px,4.6vw,60px);font-weight:600;color:var(--ink)}
+h3{font-size:30px;font-weight:600}
+p{text-wrap:pretty}
+.lead{font-size:26px;line-height:1.8;color:var(--ink-soft);font-weight:300}
+.section{padding:128px 0;position:relative}
+.softrule{height:1px;border:0;background:linear-gradient(90deg,transparent,var(--amber-line),transparent);opacity:.5;margin:0 auto;max-width:var(--maxw)}
+.tag{display:inline-block;font-size:19px;font-weight:500;letter-spacing:.04em;padding:7px 20px 9px;border-radius:50px;background:var(--paper-3);color:var(--terra);border:1px solid var(--line)}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-img{position:absolute;inset:0;z-index:0}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:60% center}
+.hero-img::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--paper) 4%,rgba(247,240,228,.88) 32%,rgba(247,240,228,.2) 60%,transparent 100%)}
+.hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 40px;width:100%}
+.hero-eyebrow{font-size:20px;letter-spacing:.46em;text-transform:uppercase;color:var(--terra);font-weight:500;margin-bottom:32px}
+.hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(64px,11vw,150px);line-height:1.0;letter-spacing:.01em;color:var(--ink)}
+.hero h1 .sub{display:block;font-size:clamp(24px,3.2vw,42px);font-weight:400;letter-spacing:.28em;color:var(--terra);margin-top:28px}
+.hero-statement{margin-top:44px;max-width:660px;font-size:25px;line-height:1.78;color:var(--ink-soft);font-weight:300;border-left:2px solid var(--terra);padding-left:26px}
+.hero-meta{margin-top:46px;display:flex;gap:13px;flex-wrap:wrap}
+.scrollcue{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);z-index:3;font-size:19px;letter-spacing:.3em;color:var(--terra);text-transform:uppercase;animation:bob 2.4s var(--ease) infinite;opacity:.8}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,9px)}}
+
+/* ---------- 總綱 ---------- */
+.creed{background:var(--paper-2);text-align:center}
+.creed .big{font-family:var(--serif);font-size:clamp(31px,3.9vw,50px);font-weight:500;line-height:1.55;letter-spacing:.01em;max-width:1040px;margin:36px auto 0}
+.creed .big b{font-weight:700;color:var(--terra);font-style:normal}
+.keywords{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin:54px auto 0}
+.kw{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--amber-deep);padding:12px 30px;border:1px solid var(--amber-line);border-radius:50px;background:var(--paper);position:relative}
+.kw span{color:var(--ink-faint);font-size:18px;font-weight:300;display:block;letter-spacing:.1em;margin-top:2px;font-family:var(--sans)}
+
+/* ---------- §1 核心定調 / 轉向 ---------- */
+.pivot-banner{display:flex;align-items:center;justify-content:center;gap:clamp(20px,4vw,64px);flex-wrap:wrap;margin:56px auto 0;max-width:1000px}
+.pv{ text-align:center;flex:1;min-width:240px}
+.pv .pvl{font-size:18px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;margin-bottom:14px}
+.pv .pvt{font-family:var(--serif);font-size:clamp(28px,3.4vw,40px);font-weight:600;line-height:1.3}
+.pv.from .pvl{color:var(--ink-faint)}
+.pv.from .pvt{color:var(--ink-faint)}
+.pv.to .pvl{color:var(--terra)}
+.pv.to .pvt{color:var(--ink)}
+.pv-arrow{font-family:var(--display);font-size:56px;color:var(--amber);line-height:1;flex:none}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:center}
+.split.narrow{gap:60px}
+.figure{border-radius:18px;overflow:hidden;box-shadow:0 26px 60px -28px rgba(90,60,25,.5),0 4px 14px -6px rgba(90,60,25,.25)}
+.figure img{width:100%;height:100%;object-fit:cover;display:block}
+.body-col p+p{margin-top:22px}
+.quotepair{margin-top:14px;display:flex;flex-direction:column;gap:22px}
+.qz{font-family:var(--serif);font-size:25px;font-weight:500;line-height:1.55;color:var(--ink);padding:24px 28px;background:var(--paper-2);border-left:3px solid var(--amber);border-radius:0 12px 12px 0}
+.qz::before{content:"\201C";font-family:var(--display);color:var(--amber-light);font-size:40px;line-height:0;vertical-align:-12px;margin-right:4px}
+.note{font-size:20px;color:var(--ink-faint);font-weight:300}
+
+/* ---------- §2 對象 ---------- */
+.band{position:relative;overflow:hidden;border-radius:18px;box-shadow:0 26px 60px -30px rgba(90,60,25,.5)}
+.band.tall{height:clamp(280px,38vh,420px)}
+.band img{width:100%;height:100%;object-fit:cover}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:44px}
+.acard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:38px 34px 40px;box-shadow:0 22px 50px -34px rgba(90,60,25,.4);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.acard:hover{transform:translateY(-7px);box-shadow:0 34px 64px -30px rgba(90,60,25,.5)}
+.acard .role{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--ink)}
+.acard .st{display:inline-block;margin:14px 0 18px;font-size:18px;font-weight:500;color:var(--terra);background:var(--paper-3);padding:5px 15px;border-radius:40px;letter-spacing:.02em}
+.acard .ch{font-size:21px;color:var(--ink-soft);line-height:1.68}
+.acard .ch b{color:var(--ink);font-weight:500}
+.subnote{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:30px}
+.subnote .sn{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:26px 30px}
+.subnote .sn h4{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--amber-deep);margin-bottom:8px}
+.subnote .sn p{font-size:20px;color:var(--ink-soft);line-height:1.62}
+
+/* ---------- §3 交通現實 ---------- */
+.reality{background:var(--paper-2)}
+.real-list{list-style:none;margin-top:38px}
+.real-list li{font-size:23px;line-height:1.65;padding:20px 0 20px 40px;position:relative;border-top:1px solid var(--line);color:var(--ink-soft)}
+.real-list li:last-child{border-bottom:1px solid var(--line)}
+.real-list li::before{content:"";position:absolute;left:2px;top:31px;width:12px;height:12px;border-radius:50%;background:var(--terra-soft);box-shadow:0 0 0 5px rgba(192,107,60,.13)}
+.real-list li b{color:var(--ink);font-weight:500}
+.real-key{margin-top:34px;background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--terra);border-radius:0 14px 14px 0;padding:30px 34px}
+.real-key .rk{font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);font-weight:500;margin-bottom:12px}
+.real-key p{font-size:23px;color:var(--ink-soft);line-height:1.7}
+.real-key b{color:var(--ink);font-weight:500}
+
+/* ---------- §4 七個點子（重頭戲）---------- */
+.ideas-band{position:relative;height:44vh;min-height:340px;overflow:hidden}
+.ideas-band img{width:100%;height:100%;object-fit:cover;object-position:center 46%}
+.ideas-band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 38%,var(--paper) 98%)}
+.ideas-head{position:relative;z-index:2;text-align:center;max-width:840px;margin:-70px auto 0;background:var(--paper);padding-top:24px}
+.ideawall{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:50px}
+.idea{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:34px 30px 32px;position:relative;transition:transform .38s var(--ease),box-shadow .38s var(--ease);overflow:hidden}
+.idea:hover{transform:translateY(-6px);box-shadow:0 28px 56px -32px rgba(90,60,25,.5)}
+.idea .in{font-family:var(--display);font-size:50px;font-weight:600;color:var(--amber-light);line-height:.9}
+.idea h4{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--ink);margin:8px 0 14px}
+.idea p{font-size:20px;color:var(--ink-soft);line-height:1.64}
+.idea.feature{grid-column:span 1;border-color:var(--amber-line);background:linear-gradient(180deg,var(--paper),var(--paper-2))}
+.idea .flag{display:inline-block;margin-top:14px;font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);font-weight:500}
+
+/* ---------- §5 給二代訊息 ---------- */
+.messages{position:relative;background:var(--paper-2);overflow:hidden}
+.msg-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:52px}
+.mcard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:40px 38px;position:relative;overflow:hidden}
+.mcard::before{content:"";position:absolute;top:0;left:0;width:5px;height:100%;background:linear-gradient(180deg,var(--amber),var(--terra-soft))}
+.mcard .mi{font-family:var(--display);font-size:22px;font-weight:600;letter-spacing:.05em;color:var(--terra);text-transform:uppercase}
+.mcard h3{font-family:var(--serif);font-size:29px;font-weight:600;margin:8px 0 16px;color:var(--ink)}
+.mcard p{font-size:21px;color:var(--ink-soft);line-height:1.72}
+.mcard p b{color:var(--ink);font-weight:500}
+
+/* ---------- §6 世代洞察 ---------- */
+.gen{position:relative;overflow:hidden}
+.gen-pull{text-align:center;max-width:1000px;margin:0 auto}
+.gen-pull .pq{font-family:var(--serif);font-size:clamp(34px,4.6vw,60px);font-weight:600;line-height:1.4;color:var(--ink);letter-spacing:.01em;margin-top:30px}
+.gen-pull .pq b{color:var(--terra);font-weight:700}
+.contrast{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;margin-top:64px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--paper)}
+.cside{padding:48px 44px}
+.cside.before{background:var(--paper-2)}
+.cside .era{font-size:19px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;margin-bottom:8px}
+.cside.before .era{color:var(--ink-faint)}
+.cside.after .era{color:var(--terra)}
+.cside h3{font-family:var(--serif);font-size:32px;font-weight:600;margin-bottom:20px;color:var(--ink)}
+.cside p{font-size:21px;color:var(--ink-soft);line-height:1.72}
+.cside p+p{margin-top:16px}
+.cmid{width:1px;background:linear-gradient(180deg,transparent,var(--amber-line),transparent);position:relative}
+.cmid::after{content:"vs";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--display);font-style:italic;font-size:30px;color:var(--amber);background:var(--paper);padding:6px 8px}
+.gen-fig{border-radius:18px;overflow:hidden;margin-top:60px;box-shadow:0 30px 70px -36px rgba(90,60,25,.55);max-width:980px;margin-left:auto;margin-right:auto}
+.gen-fig img{width:100%}
+.gen-coda{text-align:center;font-family:var(--serif);font-size:25px;color:var(--ink-soft);font-weight:400;max-width:820px;margin:46px auto 0;line-height:1.7}
+.gen-coda b{color:var(--amber-deep);font-weight:600}
+
+/* ---------- §7 賢德充電 ---------- */
+.deflist{list-style:none;margin-top:30px}
+.deflist li{padding:24px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}
+.deflist li:last-child{border-bottom:1px solid var(--line)}
+.deflist .mk{font-family:var(--display);font-size:34px;font-weight:600;color:var(--amber-light);line-height:1}
+.deflist .dt{font-size:24px;font-weight:500;color:var(--ink)}
+.deflist .dd{font-size:21px;color:var(--ink-soft);margin-top:6px;line-height:1.66}
+.callout{background:var(--paper-3);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:0 14px 14px 0;padding:32px 36px;margin-top:32px}
+.callout .ct{font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);font-weight:500;margin-bottom:13px}
+.callout p{font-size:22px;color:var(--ink-soft);line-height:1.72}
+.callout b{color:var(--ink);font-weight:500}
+
+/* ---------- §8 新舊張力 ---------- */
+.tension{background:var(--paper-2)}
+.tension-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:50px}
+.tcard{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:30px 32px}
+.tcard h4{font-family:var(--serif);font-size:23px;font-weight:600;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.tcard h4::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--terra-soft);flex:none;transform:rotate(45deg)}
+.tcard p{font-size:20px;color:var(--ink-soft);line-height:1.66}
+.resolve{position:relative;min-height:74vh;display:flex;align-items:center;overflow:hidden;margin-top:0}
+.resolve-img{position:absolute;inset:0;z-index:0}
+.resolve-img img{width:100%;height:100%;object-fit:cover;object-position:right center}
+.resolve-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--paper) 12%,rgba(247,240,228,.82) 42%,transparent 82%)}
+.resolve .panel{position:relative;z-index:2;max-width:620px}
+.resolve h2{margin-top:24px}
+.resolve .rq{font-family:var(--serif);font-size:26px;font-weight:500;line-height:1.6;color:var(--ink);margin-top:26px}
+.resolve .rq b{color:var(--terra);font-weight:600}
+
+/* ---------- §9 結論 ---------- */
+.conclusion{text-align:center}
+.axes{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:920px;margin:54px auto 0;text-align:left}
+.axis{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:36px 38px;position:relative}
+.axis .ax{font-family:var(--display);font-size:44px;font-weight:600;color:var(--amber-light);line-height:.9}
+.axis h4{font-family:var(--serif);font-size:25px;font-weight:600;margin:10px 0 8px;color:var(--ink)}
+.axis p{font-size:20px;color:var(--ink-soft);line-height:1.64}
+.tobe{margin:56px auto 0;max-width:760px;font-family:var(--serif);font-size:25px;font-weight:500;color:var(--ink-soft);line-height:1.7}
+.tobe b{color:var(--terra);font-weight:600}
+.pill-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+
+/* ---------- §10 行動 ---------- */
+.actions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:54px}
+.act{display:grid;grid-template-columns:auto 1fr;gap:22px;background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:30px 32px;transition:transform .35s var(--ease),background .35s var(--ease)}
+.act:hover{transform:translateY(-5px);background:var(--paper-3)}
+.act .an{font-family:var(--display);font-size:46px;font-weight:600;color:var(--amber-light);line-height:.9}
+.act .at{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.act .ad{font-size:20px;color:var(--ink-soft);line-height:1.58}
+
+/* ---------- footer ---------- */
+footer{position:relative;background:var(--ink);color:var(--paper);padding:96px 0 72px;overflow:hidden}
+footer .ft-img{position:absolute;inset:0;z-index:0;opacity:.16}
+footer .ft-img img{width:100%;height:100%;object-fit:cover}
+footer .wrap{position:relative;z-index:2;display:flex;flex-direction:column;gap:22px}
+footer .ft-title{font-family:var(--serif);font-size:34px;font-weight:600;letter-spacing:.14em;color:var(--amber-light)}
+footer p{font-size:20px;color:#D6C8B0;font-weight:300;max-width:900px;line-height:1.72}
+footer .meta{display:flex;gap:38px;flex-wrap:wrap;margin-top:14px;font-size:19px;color:#A8987E}
+footer .meta b{color:var(--paper);font-weight:500}
+
+/* ---------- 進度條 ---------- */
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--terra));width:0;z-index:100}
+
+/* ---------- 動畫 ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.scrollcue{animation:none}}
+
+/* ---------- RWD ---------- */
+@media (max-width:920px){
+  body{font-size:21px}
+  .wrap{padding:0 24px}
+  .section{padding:78px 0}
+  .split,.msg-grid,.actions-grid,.subnote{grid-template-columns:1fr;gap:38px}
+  .cards3,.ideawall,.tension-grid,.axes{grid-template-columns:1fr;gap:22px}
+  .actions-grid{gap:18px}
+  .contrast{grid-template-columns:1fr}
+  .cmid{width:auto;height:1px;background:linear-gradient(90deg,transparent,var(--amber-line),transparent)}
+  .cmid::after{top:50%}
+  .pivot-banner{flex-direction:column;gap:18px}
+  .pv-arrow{transform:rotate(90deg)}
+  .hero-img::after{background:linear-gradient(180deg,rgba(247,240,228,.32),var(--paper) 80%)}
+  .hero h1{font-size:clamp(52px,15vw,86px)}
+  .resolve-img::after{background:linear-gradient(180deg,rgba(247,240,228,.5),var(--paper) 80%)}
+  .deflist li{grid-template-columns:1fr;gap:6px}
+  .ideas-head{margin-top:-40px}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-img"><img src="assets/img/hero.png" alt="暖金窗光下，一群年輕人勾肩搭背相伴而立，象徵歸屬與留下來"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">青年壇主班 · 課程設計討論</div>
+    <h1>願意留下來<span class="sub">先讓他喜歡來 · 才談得上接班</span></h1>
+    <p class="hero-statement">不是「要他做什麼」，而是讓他喜歡來、願意留下來——這場討論，從這個轉念開始。</p>
+    <div class="hero-meta">
+      <span class="tag">2026.06.13</span>
+      <span class="tag">討論時長 102 分鐘</span>
+      <span class="tag">多人即席腦力激盪</span>
+    </div>
+  </div>
+  <div class="scrollcue">向下捲動</div>
+</header>
+
+<!-- ============ 總綱 ============ -->
+<section class="section creed">
+  <div class="wrap reveal">
+    <div class="kicker ctr"><span class="num">00</span> 一句話總綱</div>
+    <p class="big">這是一場為「青年壇主班」設計課程的腦力激盪——目標不是<b>要求二代去做事</b>，而是先讓他們<b>喜歡來、願意留下來</b>：用體驗、遊戲、分組互動，讓孩子理解父母在忙什麼、感受「家有佛堂」的好處；同時也替已扛起重任的<b>賢德</b>學長姐充電、療癒、補德。</p>
+    <div class="keywords">
+      <div class="kw">理解<span>UNDERSTAND</span></div>
+      <div class="kw">見證<span>WITNESS</span></div>
+      <div class="kw">留下來<span>STAY</span></div>
+      <div class="kw">充電<span>RECHARGE</span></div>
+    </div>
+  </div>
+</section>
+<hr class="softrule">
+
+<!-- ============ §1 核心定調 ============ -->
+<section class="section" id="s1">
+  <div class="wrap">
+    <div class="reveal" style="max-width:860px">
+      <div class="kicker"><span class="num">01</span> 核心定調</div>
+      <h2 style="margin-top:22px">從「要他做」，<br>轉向「讓他願意」</h2>
+      <p class="lead" style="margin-top:18px">整場討論一開始就確立了最重要的方向轉變：先談情感，再談任務。</p>
+    </div>
+    <div class="pivot-banner reveal">
+      <div class="pv from"><div class="pvl">過去的出發點</div><div class="pvt">你得來接班<br>你得做什麼</div></div>
+      <div class="pv-arrow">→</div>
+      <div class="pv to"><div class="pvl">現在的出發點</div><div class="pvt">先讓他喜歡來<br>願意留下來</div></div>
+    </div>
+    <div class="split narrow" style="margin-top:84px">
+      <div class="figure reveal"><img src="assets/img/pivot.png" alt="敞開的木門透進暖金色光，象徵從要求轉為歡迎"></div>
+      <div class="body-col reveal">
+        <p>「叫他做什麼，他下次就不來了。」對二代而言，把「接班、做事」當開場是反效果。重點要放回<b style="color:var(--ink);font-weight:500">情感與喜歡</b>——先讓孩子認識我們、喜歡我們、願意留下來，這是最初步、也最重要的一步。</p>
+        <p class="note" style="margin-top:18px">理解先於行動：要讓孩子體諒父母在忙什麼，而不是厭惡父母為何不陪自己。課程因此以<b style="color:var(--ink-soft)">實作／體驗</b>為主、觀念為輔——情感連結往往發生在活動與遊戲裡，而非單向講課。</p>
+        <div class="quotepair">
+          <p class="qz">佛堂不是只有你父母而已，我們都是你的家人。</p>
+          <p class="qz">要讓他喜歡來，他才會想要來。把那個「想來」的衝動培養起來，比較重要。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="softrule">
+
+<!-- ============ §2 對象與定位難題 ============ -->
+<section class="section" id="s2">
+  <div class="wrap">
+    <div class="reveal" style="max-width:860px">
+      <div class="kicker"><span class="num">02</span> 對象與定位</div>
+      <h2 style="margin-top:22px">一個班，三種人</h2>
+      <p class="lead" style="margin-top:18px">學員組成複雜，是討論反覆回到的難點——同一堂課，要同時打中三群很不一樣的孩子。</p>
+    </div>
+    <div class="band tall reveal" style="margin-top:46px"><img src="assets/img/audience.png" alt="不同年齡的年輕身影在暖光中並肩而立"></div>
+    <div class="cards3">
+      <div class="acard reveal">
+        <div class="role">純二代</div>
+        <div class="st">尚未進賢德 · 國高中為主</div>
+        <p class="ch">被父母半推半就帶來，「非來不可」的理由薄弱。要先給他<b>「家有佛堂的好處」</b>，讓他有想來的衝動。</p>
+      </div>
+      <div class="acard reveal" style="transition-delay:.1s">
+        <div class="role">賢德的孩子</div>
+        <div class="st">較有自覺 · 相對懂事</div>
+        <p class="ch">已經聽過很多觀念，<b>不能再一直「叫他做什麼」</b>。要的是被看見、被滋養，而不是又一輪任務。</p>
+      </div>
+      <div class="acard reveal" style="transition-delay:.2s">
+        <div class="role">學長姐 · 老賢德</div>
+        <div class="st">成熟度高 · 實際在帶人</div>
+        <p class="ch">課程要能真正<b>「打中」他們</b>，否則完全沒打在身上。內聖、自我修為，是他們最需要補的一塊。</p>
+      </div>
+    </div>
+    <div class="subnote">
+      <div class="sn reveal"><h4>年齡跨度大</h4><p>從國中、高中到出社會，「range 還是很大」；國高中、男女差異都是挑戰，彼此不見得願意一起玩。</p></div>
+      <div class="sn reveal" style="transition-delay:.08s"><h4>班名為何掛「賢德」</h4><p>賢德的孩子希望有針對自己團隊設計的班；賢德班只有兩天，內聖與自我修為放不進去，想藉壇主班補上。此班相對寬鬆，本質是一個「青年壇組班」。</p></div>
+    </div>
+  </div>
+</section>
+<hr class="softrule">
+
+<!-- ============ §3 出席與交通現實 ============ -->
+<section class="section reality" id="s3">
+  <div class="wrap split narrow">
+    <div class="body-col reveal">
+      <div class="kicker"><span class="num">03</span> 現實的限制</div>
+      <h2 style="margin-top:22px">怎麼讓他<br>「固定回得來」</h2>
+      <p class="lead" style="margin-top:18px">在談課程之前，先得面對最現實的一關——出席與交通。</p>
+      <div class="real-key">
+        <div class="rk">務實結論</div>
+        <p>與其每次另辦活動，不如讓孩子<b>固定能來上進階班</b>——只要常出現在面前，辦活動時就不會忘記把他們「撈上來」。</p>
+      </div>
+    </div>
+    <div class="body-col reveal">
+      <ul class="real-list">
+        <li><b>既有平台</b>：進階班、真美班（？）、心靈班、國高中班等，已是現成的接觸點。</li>
+        <li><b>台北相對便利</b>：孩子大一點、家長 OK，自己搭車就能到。</li>
+        <li><b>其他地區較難</b>：幾乎一定要家長接送；晚上的進階班「跟補習一樣」，父母得在外面等下課。</li>
+        <li><b>補習壓力</b>：現在孩子要一直補習，補完還要再補，是來上課的一大阻力。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<hr class="softrule">
+
+<!-- ============ §4 七個點子（重頭戲）============ -->
+<section class="section" id="s4" style="padding-top:0">
+  <div class="ideas-band reveal"><img src="assets/img/ideas.png" alt="一群年輕人圍著木桌書寫、貼便利貼腦力激盪"></div>
+  <div class="wrap">
+    <div class="ideas-head reveal">
+      <div class="kicker ctr"><span class="num">04</span> 課程設計</div>
+      <h2 style="margin-top:20px">會中現場發想的七個點子</h2>
+      <p class="lead" style="margin-top:16px">這是討論最熱烈、產出最多的部分——一個接一個被「接住」的可行設計。</p>
+    </div>
+    <div class="ideawall">
+      <div class="idea reveal">
+        <div class="in">1</div>
+        <h4>夏令營式混齡分組</h4>
+        <p>仿夏令營，每組平均配置不同年齡層；有經驗者當小班長「大的代小的」，依地區分組最實在，每組安插一位「住公堂、出過力」的種子傳遞初心。等於強迫他們認識新朋友。</p>
+      </div>
+      <div class="idea reveal" style="transition-delay:.06s">
+        <div class="in">2</div>
+        <h4>心智圖認識父母</h4>
+        <p>每組把成員名字往外延伸：你父母在佛堂是什麼角色、在做什麼？上台報告「他們認為的父母在忙什麼」。推進邏輯：<b style="color:var(--ink);font-weight:500">討厭父母 → 理解父母 → 變成父母</b>。</p>
+      </div>
+      <div class="idea reveal" style="transition-delay:.12s">
+        <div class="in">3</div>
+        <h4>丟筒子 · 抽籤說真心話</h4>
+        <p>不記名寫下「你是什麼原因來的」投入筒子，隨機抽出討論。製造「原來這裡可以講真話」的氛圍——後學只想聽真的，不想聽場面話。</p>
+      </div>
+      <div class="idea feature reveal" style="transition-delay:.0s">
+        <div class="in">4</div>
+        <h4>見證分享</h4>
+        <p>講「家有佛堂的好處」：把准考證放佛桌、求道後脾氣改變、命運不同等具體見證。效法基督教「逢人就講」，由走過來的人現身說法。</p>
+        <span class="flag">★ 被反覆強調為關鍵</span>
+      </div>
+      <div class="idea reveal" style="transition-delay:.06s">
+        <div class="in">5</div>
+        <h4>親子訪談短片</h4>
+        <p>找走過親子糾結的親子做類 Podcast／訪談，剪成「搜查線」式短片（可馬賽克、可剪多段）。預先剪輯使其「可控、不會燒起來」，呈現父母開荒背後的虧欠與糾結。</p>
+      </div>
+      <div class="idea reveal" style="transition-delay:.12s">
+        <div class="in">6</div>
+        <h4>集氣 · 禱告橋段</h4>
+        <p>仿基督教小組替彼此禱告：被抽到者說出近期困擾，全組牽手一起祈福。是信念的傳遞與集氣——但「好的很好，不好的超尷尬」，需要拿捏。</p>
+      </div>
+      <div class="idea reveal" style="transition-delay:.06s">
+        <div class="in">7</div>
+        <h4>擁抱 · 寫一句話破冰</h4>
+        <p>借鏡點傳師經驗：什麼都不用講，輪流抱一下。用於化解新舊賢德的疙瘩——「越解釋越慘，不如抱一下；抱一下不能解決就抱兩下」。依各地文化選擇用寫的或用抱的。</p>
+      </div>
+      <div class="idea reveal" style="transition-delay:.12s;background:var(--paper-2);display:flex;flex-direction:column;justify-content:center">
+        <p style="font-family:var(--serif);font-size:23px;color:var(--amber-deep);font-weight:600;line-height:1.5">七個點子的共同精神：<br>讓孩子知道，這裡是<br>「願意聽、可以講真話」的地方。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §5 給二代的訊息 ============ -->
+<section class="section messages" id="s5">
+  <div class="wrap">
+    <div class="split narrow" style="align-items:start">
+      <div class="reveal">
+        <div class="kicker"><span class="num">05</span> 想對孩子說的話</div>
+        <h2 style="margin-top:22px">給二代的<br>四則訊息</h2>
+        <p class="lead" style="margin-top:18px">針對尚未進賢德的純二代，討論凝聚出要傳遞的核心觀念。</p>
+        <div class="figure reveal" style="margin-top:32px"><img src="assets/img/messages.png" alt="一位年輕人在暖光窗邊靜坐，沉靜而被充電"></div>
+      </div>
+      <div class="msg-grid" style="grid-template-columns:1fr;margin-top:8px">
+        <div class="mcard reveal">
+          <div class="mi">壹</div>
+          <h3>留下來，是萬中選一</h3>
+          <p>每天篩掉九成的人，能留下來「<b>真的是萬中選一</b>、是有使命的」。但也要把「代價」說清楚——不只說好聽的。</p>
+        </div>
+        <div class="mcard reveal" style="transition-delay:.08s">
+          <div class="mi">貳</div>
+          <h3>多了一份「覺察」</h3>
+          <p>求道後多了覺察的能力——心裡有個「<b>小天使</b>」，在情緒翻湧時幫你壓住小惡魔。</p>
+        </div>
+        <div class="mcard reveal" style="transition-delay:.16s">
+          <div class="mi">參</div>
+          <h3>真正的充電與療癒</h3>
+          <p>來上課身體很累，但靜下來之後「心靈相對平靜」，是真正的充電；回到日常生活，更有力氣。</p>
+        </div>
+        <div class="mcard reveal" style="transition-delay:.24s">
+          <div class="mi">肆</div>
+          <h3>口袋裡的一個風景區</h3>
+          <p>就算現在無法接受，也可以把佛堂當成「<b>口袋裡的風景區</b>」——某一天心境隨年齡長大，真的來的時候，會得到自己要的東西。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="softrule">
+
+<!-- ============ §6 世代差異 ============ -->
+<section class="section gen" id="s6">
+  <div class="wrap">
+    <div class="gen-pull reveal">
+      <div class="kicker ctr"><span class="num">06</span> 最有份量的洞察</div>
+      <p class="pq">為什麼以前的二代不怨父母，<br>現在的孩子會？<br><b>因為父母在賺天地，是看不到的。</b></p>
+    </div>
+    <div class="contrast reveal">
+      <div class="cside before">
+        <div class="era">以前的孩子</div>
+        <h3>那關乎「生存」</h3>
+        <p>父母出去打三份工，是為了全家活下去。孩子能感受到那份辛苦，特別懂事體貼。</p>
+        <p>那年代拚聯考、沒空來佛堂，平日父母不在、孩子在補習班，沒有「父母應該陪我」的期待；父母從佛堂回來會帶東西、講出去玩的行程，所以不會討厭佛堂。</p>
+      </div>
+      <div class="cmid"></div>
+      <div class="cside after">
+        <div class="era">現在的孩子</div>
+        <h3>忙的是「修辦、開荒」</h3>
+        <p>孩子感受不到它和「生存」一樣重要，於是難以理解、產生情緒。</p>
+        <p>現在孩子太自由、想法多，會直接問「我為什麼要接受你這樣」。現在的受苦多是「心靈上的受苦」，而非肉體吃不飽——這是打罵教育的最後一代、時代的分界點。</p>
+      </div>
+    </div>
+    <div class="gen-fig reveal"><img src="assets/img/generations.png" alt="一雙蒼老的手輕握著年輕的手，象徵世代之間的連結"></div>
+    <p class="gen-coda reveal">見證的力量，在於「<b>多元視角</b>」——自己家也許給不出完整答案，但孩子看到別人家因父母付出而改變，就不會困在自己家的傷口裡。</p>
+  </div>
+</section>
+<hr class="softrule">
+
+<!-- ============ §7 賢德充電 ============ -->
+<section class="section" id="s7">
+  <div class="wrap split narrow">
+    <div class="figure reveal"><img src="assets/img/recharge.png" alt="暖光中靜靜休憩、被滋養的身影，旁邊一杯茶"></div>
+    <div class="body-col reveal">
+      <div class="kicker"><span class="num">07</span> 給賢德 · 學長姐</div>
+      <h2 style="margin-top:22px">不要再叫他做，<br>替他充電補德</h2>
+      <p class="lead" style="margin-top:18px">針對已經很懂事、實際在扛重任的這群人，方向很明確。</p>
+      <ul class="deflist">
+        <li><span class="mk">·</span><div><div class="dt">不再灌觀念、不再交代任務</div><div class="dd">「賢德班已經講那麼多『你要怎麼做』，他聽膩了。」</div></div></li>
+        <li><span class="mk">·</span><div><div class="dt">強化德性與內聖</div><div class="dd">與其要他帶領，不如著重讓人願意承奉、跟從、仰慕的那種特質——言、行、心。</div></div></li>
+        <li><span class="mk">·</span><div><div class="dt">充電與滋養</div><div class="dd">讓「中間硬扛起來」的人，回來能鬆一口氣、被滋養，出班後還有力量再往前。</div></div></li>
+        <li><span class="mk">·</span><div><div class="dt">讓他自己選擇定位</div><div class="dd">用遊戲讓學員自己走到「我是幹部／我還需要學習」的位置——我們認為他成熟，但他可能不想這麼成熟。</div></div></li>
+      </ul>
+      <div class="callout"><div class="ct">一個提醒</div><p>打子彈在「老的」身上時，要同時關注「小的」反應——<b>水龍頭切大，小的別被沖走。</b></p></div>
+    </div>
+  </div>
+</section>
+<hr class="softrule">
+
+<!-- ============ §8 新舊張力 ============ -->
+<section class="section tension" id="s8">
+  <div class="wrap">
+    <div class="reveal" style="max-width:860px">
+      <div class="kicker"><span class="num">08</span> 會議尾聲的真實議題</div>
+      <h2 style="margin-top:22px">新舊賢德之間的張力</h2>
+      <p class="lead" style="margin-top:18px">這群人之間的疙瘩，往往是內心問題、解釋不清——卻是最需要被接住的。</p>
+    </div>
+    <div class="tension-grid">
+      <div class="tcard reveal"><h4>帶不動</h4><p>有些學長帶不動人，轉而用嚴格的講話方式；底下覺得「標準很爛」，開始有保護自己的機制與互相攻擊。</p></div>
+      <div class="tcard reveal" style="transition-delay:.06s"><h4>定位的迷惘</h4><p>年輕賢德學長姐——老師在、又沒人聽我的，「我到底要定位在哪裡」。</p></div>
+      <div class="tcard reveal" style="transition-delay:.12s"><h4>很會帶的都走了</h4><p>很會帶的人都當老師、或有別的出口；留下來的反而卡住。</p></div>
+      <div class="tcard reveal" style="transition-delay:.18s"><h4>回不去的疏離</h4><p>很久沒回去的人找不到同溫層、跟核心差二十歲，反而「覺得回去很可怕」，寧可待在熟悉的區域。</p></div>
+    </div>
+  </div>
+  <div class="resolve reveal" style="margin-top:90px">
+    <div class="resolve-img"><img src="assets/img/embrace.png" alt="兩人在暖金色光中相擁，象徵釋懷與破冰"></div>
+    <div class="wrap">
+      <div class="panel">
+        <div class="kicker">解法傾向</div>
+        <h2 style="margin-top:14px">不用解釋，<br>用體驗破冰</h2>
+        <p class="rq">很多疙瘩解釋不清也破不了。唯一能做的，是效仿先佛的方式——用<b>擁抱、寫一句話</b>等遊戲，強迫見面、釋懷、破冰、強迫熟悉。</p>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="softrule">
+
+<!-- ============ §9 結論與後續 ============ -->
+<section class="section conclusion" id="s9">
+  <div class="wrap">
+    <div class="reveal" style="max-width:820px;margin:0 auto">
+      <div class="kicker ctr"><span class="num">09</span> 會議的收斂</div>
+      <h2 style="margin-top:22px">一場未完成、待續的籌備會</h2>
+      <p class="lead" style="margin-top:18px">這次的班，「頂多做到讓孩子先理解父母」就很好——情緒處理，交給各系列班長期進行。</p>
+    </div>
+    <div class="axes">
+      <div class="axis reveal">
+        <div class="ax">壹</div>
+        <h4>家有佛堂的好處</h4>
+        <p>讓孩子感受到「住公堂、家有佛堂」實際帶來的改變與好處。</p>
+      </div>
+      <div class="axis reveal" style="transition-delay:.08s">
+        <div class="ax">貳</div>
+        <h4>父母在做什麼</h4>
+        <p>讓孩子看懂父母在忙什麼、為什麼要做這些事——這次只求「先理解」。</p>
+      </div>
+    </div>
+    <p class="tobe reveal">方法論共識：以<b>體驗、遊戲、分組互動、見證分享</b>為主；賢德區塊則強化內聖德性、提供充電療癒與破冰橋段。會中已有人把紀錄 PO 上群組，提議「收整一下、再約下一次」繼續深化。</p>
+    <div class="pill-row reveal">
+      <span class="tag">先理解，不強求</span>
+      <span class="tag">體驗為主</span>
+      <span class="tag">見證為鑰</span>
+      <span class="tag">待續 · 再約下一次</span>
+    </div>
+  </div>
+</section>
+<hr class="softrule">
+
+<!-- ============ §10 行動要點 ============ -->
+<section class="section" id="s10">
+  <div class="wrap">
+    <div class="reveal" style="max-width:820px">
+      <div class="kicker"><span class="num">10</span> Take-aways</div>
+      <h2 style="margin-top:22px">行動要點</h2>
+    </div>
+    <div class="actions-grid">
+      <div class="act reveal"><div class="an">1</div><div><div class="at">改變出發點</div><div class="ad">從「要二代做事」轉為「讓他喜歡來、願意留下來」，情感先於任務。</div></div></div>
+      <div class="act reveal"><div class="an">2</div><div><div class="at">以體驗為主</div><div class="ad">實作、遊戲、分組互動承載情感連結，觀念課點到為止。</div></div></div>
+      <div class="act reveal"><div class="an">3</div><div><div class="at">混齡分組</div><div class="ad">仿夏令營、依地區分組，種子帶新人，組長沿用不重選。</div></div></div>
+      <div class="act reveal"><div class="an">4</div><div><div class="at">強化見證</div><div class="ad">練習把「家有佛堂的好處」「為什麼留下來」具體說出來，逢人就講。</div></div></div>
+      <div class="act reveal"><div class="an">5</div><div><div class="at">幫孩子理解父母</div><div class="ad">用心智圖、訪談短片，讓孩子看懂父母在忙什麼——這次只求先理解。</div></div></div>
+      <div class="act reveal"><div class="an">6</div><div><div class="at">替賢德充電補德</div><div class="ad">不再叫他做事，著重德性、療癒、充電與破冰，讓他出班有力氣再往前。</div></div></div>
+      <div class="act reveal"><div class="an">7</div><div><div class="at">正視新舊張力</div><div class="ad">用擁抱、寫一句話等「不用解釋」的體驗破冰，化解疙瘩、強迫熟悉。</div></div></div>
+      <div class="act reveal"><div class="an">8</div><div><div class="at">面對交通課業</div><div class="ad">盡量讓孩子固定回既有進階班，常出現才好照顧、好邀約。</div></div></div>
+      <div class="act reveal"><div class="an">9</div><div><div class="at">再約下一次</div><div class="ad">本次未定案，需收整紀錄、續開會議，深化課程設計。</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="ft-img"><img src="assets/img/dawn.png" alt="窗邊曙光灑進安靜的房間"></div>
+  <div class="wrap">
+    <div class="ft-title">青年壇主班 · 課程設計討論</div>
+    <p>本報告為錄音討論之重點判讀整理。原音為臺語／國語夾雜的多人即席對話，逐字稿經 AI 語音辨識（whisper）產生後人工整理；部分人名、稱謂、班別名稱辨識不確定，已只保留確定的語意骨架，未臆造未出現的具體數字與人名。視覺插圖由 AI 影像生成（Gemini），主題為溫暖人文的暖光意象。</p>
+    <div class="meta">
+      <span>來源 · <b>壇主班的討論.m4a</b></span>
+      <span>時長 · <b>102 分鐘</b></span>
+      <span>整理 · <b>2026.06.13</b></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const prog=document.getElementById('progress');
+addEventListener('scroll',()=>{const h=document.documentElement;const s=h.scrollTop/(h.scrollHeight-h.clientHeight);prog.style.width=(s*100)+'%'},{passive:true});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
