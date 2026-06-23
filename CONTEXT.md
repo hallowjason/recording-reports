@@ -1,5 +1,17 @@
 # Session Context — 2026-06-13
 
+> **狀態：全部完成並已上線，無待辦。** 兩份報告（樞紐慈悲 01、壇主班 02）皆完成、含溯源試聽功能，已推上公開 GitHub repo + GitHub Pages。下一棒若要新增第三份報告或微調，照下方流程即可。
+
+## 🚀 已部署 GitHub（2026-06-13）
+- Repo（公開）：https://github.com/hallowjason/recording-reports
+- GitHub Pages：https://hallowjason.github.io/recording-reports/
+- 根目錄 `index.html` = 入口頁，連到兩份報告；`.nojekyll` 已加
+- 音檔已壓縮為 `audio.m4a`（48kbps：01=22MB、02=38MB）符合 100MB 限制，兩份 index.html 的 `<audio src>` 已改指向它
+- `.gitignore` 排除：`.venv` `node_modules` `model_q4` `*.wav` 原始大 m4a `_*` 暫存 `*.log` `.claude/`
+- ⚠️ 內容為公開（用戶授權）；原始未壓縮 m4a 與 wav 留在本機、未上傳
+
+
+
 ## 資料夾結構（已重整）
 - `01_樞紐慈悲/` — 樞紐慈悲專案（逐字稿、重點 md、報告、assets、音檔）
 - `02_壇主班討論/` — 壇主班專案（**2026-06-13 本 session 新建完成**）
@@ -39,11 +51,15 @@
 
 ## 重要決策與限制
 - **圖片必須真實 AI 生成、非 SVG**；驗收由用戶說了算（見全域記憶 prefers-real-images-over-svg）
-- 生圖管道 = **codex CLI app 版** `/Applications/Codex.app/Contents/Resources/codex` 的內建 **imagegen**，走 ChatGPT 訂閱、不用 API key（API key 已達 billing limit）
-- codex config 坑：用 app 版 codex；`~/.codex/config.toml` 的 `service_tier` 保持 `priority`
+- **生圖管道（2026-06 現況）**：OpenAI/gpt-image-2 與 codex imagegen **billing 額度都已滿** → 02 改用 **Gemini API**（`gen_img.py`，env `GEMINI_API_KEY`，model `gemini-2.5-flash-image` Nano Banana，`aspectRatio` 走 `imageConfig`）。01 當時用的是 codex imagegen。下次優先用 Gemini 那條，最穩。
+- 轉錄管道：m4a →（ffmpeg 轉 16k mono wav）→ `mlx_whisper.transcribe`（本地 `model_q4`），產 raw/timed/segments 三檔
 - 轉錄坑：HF 大檔限速 → `curl -C -` 直抓 weights 放本地，mlx 讀本地路徑
-- 設計底層：figma DESIGN.md 結構 + 暖米色 + 金線意象
+- 部署坑：原始 m4a >100MB 推不上 GitHub → `ffmpeg -ac 1 -b:a 48k` 壓成 `audio.m4a`（語音夠用），HTML `<audio src>` 指它；原始大檔與 wav 由 `.gitignore` 排除
+- puppeteer-core 是壞掉的全域符號連結 → 需 `npm install puppeteer-core@22 --no-save` 補本地；截圖腳本要放**有 node_modules 的目錄**（根目錄）才 resolve 得到
 
 ## 下次繼續
-cd /Users/gooo/Desktop/.claude/projects/recording/01_樞紐慈悲
-open index.html
+cd /Users/gooo/Desktop/.claude/projects/recording
+# 對 Claude 說：「讀 CONTEXT.md，繼續 recording 報告專案」
+# 現況：兩份報告都完成並已上線（見頂部部署區），無待辦。
+# 若要新增第三份報告：放新音檔 → 仿 02 流程（轉錄→重點 md→分頁 HTML→Gemini 生圖→srcmap 溯源）→ 在根 index.html 加卡片 → git add/commit/push（Pages 自動重建）
+# 可選微調：校正 ASR 推測的人名/班別；補 favicon；清根目錄與 01 內 _* 暫存截圖（rm 權限被擋需手動）
